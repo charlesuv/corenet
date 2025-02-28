@@ -1,5 +1,3 @@
 # CORENet: Cross-Modal 4D Radar Denoising Network with LiDAR Supervision for Autonomous Driving
-***
 ## Introduction
-***
 4D radar-based object detection draws a lot of attention due to its robustness under adverse weather, which provides rich spatial information for various driving scenarios. However, 4D radar suffers from sparse and noisy point clouds, challenging effective object detection. To address this, we propose CORENet, a cross-modal 4D radar denoising framework leveraging LiDAR supervision to discern noise and extract valid points from original radar data.  The CORENet is plug-and-play, allowing seamless integration into voxel-based object detection framework. Our method employs LiDAR data for cross-modal supervision only in model training and not for inference process. This approach significantly enhances detection performance and has been validated on the new 4D radar dataset, Dual-Radar, with sparse point clouds and high noise level. Through comprehensive experiments, the results demonstrate that our method substantially improves 4D radar object detection accuracy compared to existing mainstream approaches.
