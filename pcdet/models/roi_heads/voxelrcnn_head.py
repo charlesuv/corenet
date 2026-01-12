@@ -258,11 +258,6 @@ class VoxelRCNNHead(RoIHeadTemplate):
             targets_dict['rcnn_reg'] = rcnn_reg
 
             self.forward_ret_dict = targets_dict
-        # # 保存voxelrcnn_head的batch_dict和forward_ret_dict
-        # tensor_dict = {'batch_cls_preds': batch_cls_preds,\
-        #             'batch_box_preds': batch_box_preds,\
-        #             'rcnn_cls': rcnn_cls,\
-        #             'rcnn_reg': rcnn_reg}
-        # torch.save(tensor_dict, '/home/liufuyang/workspace/Dual-Radar/output_debug/5_VoxelRCNNHead.pt')
+
 
         return batch_dict

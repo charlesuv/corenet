@@ -408,11 +408,7 @@ class DualradarDataset(DatasetTemplate):
 
         eval_det_annos = copy.deepcopy(det_annos)
         eval_gt_annos = [copy.deepcopy(info['annos']) for info in self.dual_radar_infos]
-        # # 保存字典
-        # with open('/home/liufuyang/workspace/Dual-Radar/output_debug/7_eval_det_annos.pkl', 'wb') as f:
-        #     pickle.dump(eval_det_annos, f)
-        # with open('/home/liufuyang/workspace/Dual-Radar/output_debug/7_eval_gt_annos.pkl', 'wb') as f:
-        #     pickle.dump(eval_gt_annos, f)
+
         
         # range
         range1 = [0,30]

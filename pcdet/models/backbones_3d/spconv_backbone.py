@@ -351,11 +351,7 @@ class VoxelBackBone8x_explicit(nn.Module):
                 'x_conv4': 8,
             }
         })
-        # # 保存batch_dict
-        # import torch
-        # tensor_dict = {'voxel_features': voxel_features,\
-        #                 'voxel_coords': voxel_coords}
-        # torch.save(tensor_dict, '/home/liufuyang/workspace/Dual-Radar/output_debug/1_spconv_backbone.pt')
+
         return batch_dict
 
 class VoxelBackBone8x(nn.Module):
@@ -490,11 +486,7 @@ class VoxelBackBone8x(nn.Module):
                 'x_conv4': 8,
             }
         })
-        # # 保存batch_dict
-        # import torch
-        # tensor_dict = {'voxel_features': voxel_features,\
-        #                 'voxel_coords': voxel_coords}
-        # torch.save(tensor_dict, '/home/liufuyang/workspace/Dual-Radar/output_debug/1_spconv_backbone.pt')
+
         return batch_dict
 
 

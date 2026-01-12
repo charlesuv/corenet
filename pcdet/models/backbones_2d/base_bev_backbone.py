@@ -135,9 +135,4 @@ class BaseBEVBackbone(nn.Module):
         data_dict['spatial_features_2d'] = x #(batch,512,200,176)
         # print("%%%%%%%%%%  x 的形状为", x.shape[0])
 
-        # # 保存batch_dict
-        # tensor_dict = {'spatial_features_2d': x,\
-        #                 'spatial_features_2d_shape': x.shape}
-        # torch.save(tensor_dict, '/home/liufuyang/workspace/Dual-Radar/output_debug/3_base_bev_backbone.pt')
-
         return data_dict

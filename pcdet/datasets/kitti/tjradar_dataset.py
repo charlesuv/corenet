@@ -4,7 +4,6 @@ import pickle
 import numpy as np
 from skimage import io
 import sys
-# append your root dir path ex. sys.path.append("/data1/liufuyang/code/Dual-Radar")
 from ...ops.roiaware_pool3d import roiaware_pool3d_utils
 from ...utils import box_utils, calibration_kitti, common_utils, object3d_kitti
 from ..dataset import DatasetTemplate

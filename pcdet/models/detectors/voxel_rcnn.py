@@ -47,9 +47,7 @@ class VoxelRCNN(Detector3DTemplate):
             return ret_dict, tb_dict, disp_dict
         else:
             pred_dicts, recall_dicts = self.post_processing(batch_dict)
-            # # 保存batch_dict
-            # import torch
-            # torch.save(batch_dict, '/home/liufuyang/workspace/Dual-Radar/output_debug/6_pred_dicts.pt')
+
             path = 'vis/voxel/'
             vis_list = self.visual_save(batch_dict, pred_dicts, path)
             return pred_dicts, recall_dicts

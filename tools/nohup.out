@@ -1,3021 +1,0 @@
-2024-09-14 21:40:23,661   INFO  **********************Start logging**********************
-2024-09-14 21:40:23,662   INFO  CUDA_VISIBLE_DEVICES=0
-2024-09-14 21:40:23,662   INFO  cfg_file         cfgs/dual_radar_models/voxel_rcnn_arbe.yaml
-2024-09-14 21:40:23,662   INFO  batch_size       4
-2024-09-14 21:40:23,662   INFO  cuda_device      0
-2024-09-14 21:40:23,662   INFO  epochs           90
-2024-09-14 21:40:23,662   INFO  workers          4
-2024-09-14 21:40:23,662   INFO  extra_tag        default_heatmap_voxelrcnn_0913
-2024-09-14 21:40:23,662   INFO  ckpt             None
-2024-09-14 21:40:23,662   INFO  pretrained_model None
-2024-09-14 21:40:23,662   INFO  launcher         none
-2024-09-14 21:40:23,662   INFO  tcp_port         18888
-2024-09-14 21:40:23,662   INFO  sync_bn          False
-2024-09-14 21:40:23,662   INFO  fix_random_seed  False
-2024-09-14 21:40:23,662   INFO  ckpt_save_interval 1
-2024-09-14 21:40:23,662   INFO  local_rank       0
-2024-09-14 21:40:23,662   INFO  max_ckpt_save_num 15
-2024-09-14 21:40:23,662   INFO  merge_all_iters_to_one_epoch False
-2024-09-14 21:40:23,662   INFO  set_cfgs         None
-2024-09-14 21:40:23,663   INFO  max_waiting_mins 0
-2024-09-14 21:40:23,663   INFO  start_epoch      0
-2024-09-14 21:40:23,663   INFO  num_epochs_to_eval 20
-2024-09-14 21:40:23,663   INFO  save_to_file     False
-2024-09-14 21:40:23,663   INFO  cfg.ROOT_DIR: /data1/liufuyang/code/Dual-Radar
-2024-09-14 21:40:23,663   INFO  cfg.LOCAL_RANK: 0
-2024-09-14 21:40:23,663   INFO  cfg.CLASS_NAMES: ['Car', 'Pedestrian', 'Cyclist']
-2024-09-14 21:40:23,663   INFO  
-cfg.DATA_CONFIG = edict()
-2024-09-14 21:40:23,663   INFO  cfg.DATA_CONFIG.DATASET: DualradarDataset_ARBE
-2024-09-14 21:40:23,663   INFO  cfg.DATA_CONFIG.DATA_PATH: ../dual_radar/radar_arbe
-2024-09-14 21:40:23,663   INFO  cfg.DATA_CONFIG.POINT_CLOUD_RANGE: [-40, -10, -3, 40, 60.4, 1]
-2024-09-14 21:40:23,663   INFO  
-cfg.DATA_CONFIG.DATA_SPLIT = edict()
-2024-09-14 21:40:23,663   INFO  cfg.DATA_CONFIG.DATA_SPLIT.train: train
-2024-09-14 21:40:23,663   INFO  cfg.DATA_CONFIG.DATA_SPLIT.test: val
-2024-09-14 21:40:23,663   INFO  
-cfg.DATA_CONFIG.INFO_PATH = edict()
-2024-09-14 21:40:23,663   INFO  cfg.DATA_CONFIG.INFO_PATH.train: ['dual_radar_infos_train.pkl']
-2024-09-14 21:40:23,663   INFO  cfg.DATA_CONFIG.INFO_PATH.test: ['dual_radar_infos_val.pkl']
-2024-09-14 21:40:23,663   INFO  cfg.DATA_CONFIG.GET_ITEM_LIST: ['points']
-2024-09-14 21:40:23,663   INFO  cfg.DATA_CONFIG.FOV_POINTS_ONLY: True
-2024-09-14 21:40:23,663   INFO  
-cfg.DATA_CONFIG.DATA_AUGMENTOR = edict()
-2024-09-14 21:40:23,664   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.DISABLE_AUG_LIST: ['placeholder']
-2024-09-14 21:40:23,664   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.USE_DATA_TYPE: arbe
-2024-09-14 21:40:23,664   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.AUG_CONFIG_LIST: [{'NAME': 'gt_sampling', 'USE_ROAD_PLANE': False, 'DB_INFO_PATH': ['dual_radar_dbinfos_train.pkl'], 'PREPARE': {'filter_by_min_points': ['Car:0', 'Pedestrian:0', 'Cyclist:0'], 'filter_by_difficulty': [-1]}, 'SAMPLE_GROUPS': ['Car:15', 'Pedestrian:15', 'Cyclist:15'], 'NUM_POINT_FEATURES': 5, 'DATABASE_WITH_FAKELIDAR': False, 'REMOVE_EXTRA_WIDTH': [0.0, 0.0, 0.0], 'LIMIT_WHOLE_SCENE': False}, {'NAME': 'random_world_rotation', 'WORLD_ROT_ANGLE': [-0.78539816, 0.78539816]}, {'NAME': 'random_world_scaling', 'WORLD_SCALE_RANGE': [0.95, 1.05]}]
-2024-09-14 21:40:23,664   INFO  
-cfg.DATA_CONFIG.POINT_FEATURE_ENCODING = edict()
-2024-09-14 21:40:23,664   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.encoding_type: absolute_coordinates_encoding
-2024-09-14 21:40:23,664   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.used_feature_list: ['x', 'y', 'z', 'intensity', 'dopple']
-2024-09-14 21:40:23,664   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.src_feature_list: ['x', 'y', 'z', 'intensity', 'dopple']
-2024-09-14 21:40:23,664   INFO  cfg.DATA_CONFIG.DATA_PROCESSOR: [{'NAME': 'mask_points_and_boxes_outside_range', 'REMOVE_OUTSIDE_BOXES': True}, {'NAME': 'shuffle_points', 'SHUFFLE_ENABLED': {'train': True, 'test': False}}, {'NAME': 'transform_points_to_voxels', 'VOXEL_SIZE': [0.05, 0.05, 0.1], 'MAX_POINTS_PER_VOXEL': 6, 'MAX_NUMBER_OF_VOXELS': {'train': 16000, 'test': 40000}}]
-2024-09-14 21:40:23,664   INFO  cfg.DATA_CONFIG._BASE_CONFIG_: cfgs/dataset_configs/dual_radar_dataset_arbe.yaml
-2024-09-14 21:40:23,664   INFO  
-cfg.MODEL = edict()
-2024-09-14 21:40:23,664   INFO  cfg.MODEL.NAME: VoxelRCNN
-2024-09-14 21:40:23,664   INFO  
-cfg.MODEL.VFE = edict()
-2024-09-14 21:40:23,664   INFO  cfg.MODEL.VFE.NAME: MeanVFE
-2024-09-14 21:40:23,664   INFO  
-cfg.MODEL.BACKBONE_3D = edict()
-2024-09-14 21:40:23,664   INFO  cfg.MODEL.BACKBONE_3D.NAME: VoxelBackBone8x
-2024-09-14 21:40:23,664   INFO  
-cfg.MODEL.MAP_TO_BEV = edict()
-2024-09-14 21:40:23,664   INFO  cfg.MODEL.MAP_TO_BEV.NAME: HeightCompression
-2024-09-14 21:40:23,664   INFO  cfg.MODEL.MAP_TO_BEV.NUM_BEV_FEATURES: 256
-2024-09-14 21:40:23,664   INFO  
-cfg.MODEL.BACKBONE_2D = edict()
-2024-09-14 21:40:23,664   INFO  cfg.MODEL.BACKBONE_2D.NAME: BaseBEVBackbone
-2024-09-14 21:40:23,665   INFO  cfg.MODEL.BACKBONE_2D.LAYER_NUMS: [5, 5]
-2024-09-14 21:40:23,665   INFO  cfg.MODEL.BACKBONE_2D.LAYER_STRIDES: [1, 2]
-2024-09-14 21:40:23,665   INFO  cfg.MODEL.BACKBONE_2D.NUM_FILTERS: [64, 128]
-2024-09-14 21:40:23,665   INFO  cfg.MODEL.BACKBONE_2D.UPSAMPLE_STRIDES: [1, 2]
-2024-09-14 21:40:23,665   INFO  cfg.MODEL.BACKBONE_2D.NUM_UPSAMPLE_FILTERS: [128, 128]
-2024-09-14 21:40:23,665   INFO  
-cfg.MODEL.DENSE_HEAD = edict()
-2024-09-14 21:40:23,665   INFO  cfg.MODEL.DENSE_HEAD.NAME: AnchorHeadSingle
-2024-09-14 21:40:23,665   INFO  cfg.MODEL.DENSE_HEAD.CLASS_AGNOSTIC: False
-2024-09-14 21:40:23,665   INFO  cfg.MODEL.DENSE_HEAD.USE_DIRECTION_CLASSIFIER: True
-2024-09-14 21:40:23,665   INFO  cfg.MODEL.DENSE_HEAD.DIR_OFFSET: 0.78539
-2024-09-14 21:40:23,665   INFO  cfg.MODEL.DENSE_HEAD.DIR_LIMIT_OFFSET: 0.0
-2024-09-14 21:40:23,665   INFO  cfg.MODEL.DENSE_HEAD.NUM_DIR_BINS: 2
-2024-09-14 21:40:23,665   INFO  cfg.MODEL.DENSE_HEAD.ANCHOR_GENERATOR_CONFIG: [{'class_name': 'Car', 'anchor_sizes': [[5, 2.1, 1.7]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-1.78], 'align_center': False, 'feature_map_stride': 8, 'matched_threshold': 0.6, 'unmatched_threshold': 0.45}, {'class_name': 'Pedestrian', 'anchor_sizes': [[0.7, 0.7, 1.7]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-0.6], 'align_center': False, 'feature_map_stride': 8, 'matched_threshold': 0.5, 'unmatched_threshold': 0.35}, {'class_name': 'Cyclist', 'anchor_sizes': [[1.8, 0.8, 1.6]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-0.6], 'align_center': False, 'feature_map_stride': 8, 'matched_threshold': 0.5, 'unmatched_threshold': 0.35}]
-2024-09-14 21:40:23,665   INFO  
-cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG = edict()
-2024-09-14 21:40:23,665   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.NAME: AxisAlignedTargetAssigner
-2024-09-14 21:40:23,665   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.POS_FRACTION: -1.0
-2024-09-14 21:40:23,665   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.SAMPLE_SIZE: 512
-2024-09-14 21:40:23,665   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.NORM_BY_NUM_EXAMPLES: False
-2024-09-14 21:40:23,665   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.MATCH_HEIGHT: False
-2024-09-14 21:40:23,665   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.BOX_CODER: ResidualCoder
-2024-09-14 21:40:23,665   INFO  
-cfg.MODEL.DENSE_HEAD.LOSS_CONFIG = edict()
-2024-09-14 21:40:23,665   INFO  
-cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS = edict()
-2024-09-14 21:40:23,666   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.cls_weight: 1.0
-2024-09-14 21:40:23,666   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.loc_weight: 2.0
-2024-09-14 21:40:23,666   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.dir_weight: 0.2
-2024-09-14 21:40:23,666   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.code_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
-2024-09-14 21:40:23,666   INFO  
-cfg.MODEL.ROI_HEAD = edict()
-2024-09-14 21:40:23,666   INFO  cfg.MODEL.ROI_HEAD.NAME: VoxelRCNNHead
-2024-09-14 21:40:23,666   INFO  cfg.MODEL.ROI_HEAD.CLASS_AGNOSTIC: True
-2024-09-14 21:40:23,666   INFO  cfg.MODEL.ROI_HEAD.SHARED_FC: [256, 256]
-2024-09-14 21:40:23,666   INFO  cfg.MODEL.ROI_HEAD.CLS_FC: [256, 256]
-2024-09-14 21:40:23,666   INFO  cfg.MODEL.ROI_HEAD.REG_FC: [256, 256]
-2024-09-14 21:40:23,666   INFO  cfg.MODEL.ROI_HEAD.DP_RATIO: 0.3
-2024-09-14 21:40:23,666   INFO  
-cfg.MODEL.ROI_HEAD.NMS_CONFIG = edict()
-2024-09-14 21:40:23,666   INFO  
-cfg.MODEL.ROI_HEAD.NMS_CONFIG.TRAIN = edict()
-2024-09-14 21:40:23,666   INFO  cfg.MODEL.ROI_HEAD.NMS_CONFIG.TRAIN.NMS_TYPE: nms_gpu
-2024-09-14 21:40:23,666   INFO  cfg.MODEL.ROI_HEAD.NMS_CONFIG.TRAIN.MULTI_CLASSES_NMS: False
-2024-09-14 21:40:23,666   INFO  cfg.MODEL.ROI_HEAD.NMS_CONFIG.TRAIN.NMS_PRE_MAXSIZE: 9000
-2024-09-14 21:40:23,666   INFO  cfg.MODEL.ROI_HEAD.NMS_CONFIG.TRAIN.NMS_POST_MAXSIZE: 512
-2024-09-14 21:40:23,666   INFO  cfg.MODEL.ROI_HEAD.NMS_CONFIG.TRAIN.NMS_THRESH: 0.8
-2024-09-14 21:40:23,666   INFO  
-cfg.MODEL.ROI_HEAD.NMS_CONFIG.TEST = edict()
-2024-09-14 21:40:23,666   INFO  cfg.MODEL.ROI_HEAD.NMS_CONFIG.TEST.NMS_TYPE: nms_gpu
-2024-09-14 21:40:23,666   INFO  cfg.MODEL.ROI_HEAD.NMS_CONFIG.TEST.MULTI_CLASSES_NMS: False
-2024-09-14 21:40:23,667   INFO  cfg.MODEL.ROI_HEAD.NMS_CONFIG.TEST.USE_FAST_NMS: False
-2024-09-14 21:40:23,667   INFO  cfg.MODEL.ROI_HEAD.NMS_CONFIG.TEST.SCORE_THRESH: 0.0
-2024-09-14 21:40:23,667   INFO  cfg.MODEL.ROI_HEAD.NMS_CONFIG.TEST.NMS_PRE_MAXSIZE: 2048
-2024-09-14 21:40:23,667   INFO  cfg.MODEL.ROI_HEAD.NMS_CONFIG.TEST.NMS_POST_MAXSIZE: 100
-2024-09-14 21:40:23,667   INFO  cfg.MODEL.ROI_HEAD.NMS_CONFIG.TEST.NMS_THRESH: 0.7
-2024-09-14 21:40:23,667   INFO  
-cfg.MODEL.ROI_HEAD.ROI_GRID_POOL = edict()
-2024-09-14 21:40:23,667   INFO  cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.FEATURES_SOURCE: ['x_conv2', 'x_conv3', 'x_conv4']
-2024-09-14 21:40:23,667   INFO  cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.PRE_MLP: True
-2024-09-14 21:40:23,667   INFO  cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.GRID_SIZE: 6
-2024-09-14 21:40:23,667   INFO  
-cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.POOL_LAYERS = edict()
-2024-09-14 21:40:23,667   INFO  
-cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.POOL_LAYERS.x_conv2 = edict()
-2024-09-14 21:40:23,667   INFO  cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.POOL_LAYERS.x_conv2.MLPS: [[32, 32]]
-2024-09-14 21:40:23,667   INFO  cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.POOL_LAYERS.x_conv2.QUERY_RANGES: [[4, 4, 4]]
-2024-09-14 21:40:23,667   INFO  cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.POOL_LAYERS.x_conv2.POOL_RADIUS: [0.4]
-2024-09-14 21:40:23,667   INFO  cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.POOL_LAYERS.x_conv2.NSAMPLE: [16]
-2024-09-14 21:40:23,667   INFO  cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.POOL_LAYERS.x_conv2.POOL_METHOD: max_pool
-2024-09-14 21:40:23,667   INFO  
-cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.POOL_LAYERS.x_conv3 = edict()
-2024-09-14 21:40:23,667   INFO  cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.POOL_LAYERS.x_conv3.MLPS: [[32, 32]]
-2024-09-14 21:40:23,667   INFO  cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.POOL_LAYERS.x_conv3.QUERY_RANGES: [[4, 4, 4]]
-2024-09-14 21:40:23,667   INFO  cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.POOL_LAYERS.x_conv3.POOL_RADIUS: [0.8]
-2024-09-14 21:40:23,667   INFO  cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.POOL_LAYERS.x_conv3.NSAMPLE: [16]
-2024-09-14 21:40:23,667   INFO  cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.POOL_LAYERS.x_conv3.POOL_METHOD: max_pool
-2024-09-14 21:40:23,667   INFO  
-cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.POOL_LAYERS.x_conv4 = edict()
-2024-09-14 21:40:23,668   INFO  cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.POOL_LAYERS.x_conv4.MLPS: [[32, 32]]
-2024-09-14 21:40:23,668   INFO  cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.POOL_LAYERS.x_conv4.QUERY_RANGES: [[4, 4, 4]]
-2024-09-14 21:40:23,668   INFO  cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.POOL_LAYERS.x_conv4.POOL_RADIUS: [1.6]
-2024-09-14 21:40:23,668   INFO  cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.POOL_LAYERS.x_conv4.NSAMPLE: [16]
-2024-09-14 21:40:23,668   INFO  cfg.MODEL.ROI_HEAD.ROI_GRID_POOL.POOL_LAYERS.x_conv4.POOL_METHOD: max_pool
-2024-09-14 21:40:23,668   INFO  
-cfg.MODEL.ROI_HEAD.TARGET_CONFIG = edict()
-2024-09-14 21:40:23,668   INFO  cfg.MODEL.ROI_HEAD.TARGET_CONFIG.BOX_CODER: ResidualCoder
-2024-09-14 21:40:23,668   INFO  cfg.MODEL.ROI_HEAD.TARGET_CONFIG.ROI_PER_IMAGE: 128
-2024-09-14 21:40:23,668   INFO  cfg.MODEL.ROI_HEAD.TARGET_CONFIG.FG_RATIO: 0.5
-2024-09-14 21:40:23,668   INFO  cfg.MODEL.ROI_HEAD.TARGET_CONFIG.SAMPLE_ROI_BY_EACH_CLASS: True
-2024-09-14 21:40:23,668   INFO  cfg.MODEL.ROI_HEAD.TARGET_CONFIG.CLS_SCORE_TYPE: roi_iou
-2024-09-14 21:40:23,668   INFO  cfg.MODEL.ROI_HEAD.TARGET_CONFIG.CLS_FG_THRESH: 0.75
-2024-09-14 21:40:23,668   INFO  cfg.MODEL.ROI_HEAD.TARGET_CONFIG.CLS_BG_THRESH: 0.25
-2024-09-14 21:40:23,668   INFO  cfg.MODEL.ROI_HEAD.TARGET_CONFIG.CLS_BG_THRESH_LO: 0.1
-2024-09-14 21:40:23,668   INFO  cfg.MODEL.ROI_HEAD.TARGET_CONFIG.HARD_BG_RATIO: 0.8
-2024-09-14 21:40:23,668   INFO  cfg.MODEL.ROI_HEAD.TARGET_CONFIG.REG_FG_THRESH: 0.55
-2024-09-14 21:40:23,668   INFO  
-cfg.MODEL.ROI_HEAD.LOSS_CONFIG = edict()
-2024-09-14 21:40:23,668   INFO  cfg.MODEL.ROI_HEAD.LOSS_CONFIG.CLS_LOSS: BinaryCrossEntropy
-2024-09-14 21:40:23,668   INFO  cfg.MODEL.ROI_HEAD.LOSS_CONFIG.REG_LOSS: smooth-l1
-2024-09-14 21:40:23,668   INFO  cfg.MODEL.ROI_HEAD.LOSS_CONFIG.CORNER_LOSS_REGULARIZATION: True
-2024-09-14 21:40:23,668   INFO  cfg.MODEL.ROI_HEAD.LOSS_CONFIG.GRID_3D_IOU_LOSS: False
-2024-09-14 21:40:23,668   INFO  
-cfg.MODEL.ROI_HEAD.LOSS_CONFIG.LOSS_WEIGHTS = edict()
-2024-09-14 21:40:23,669   INFO  cfg.MODEL.ROI_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.rcnn_cls_weight: 1.0
-2024-09-14 21:40:23,669   INFO  cfg.MODEL.ROI_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.rcnn_reg_weight: 1.0
-2024-09-14 21:40:23,669   INFO  cfg.MODEL.ROI_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.rcnn_corner_weight: 1.0
-2024-09-14 21:40:23,669   INFO  cfg.MODEL.ROI_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.rcnn_iou3d_weight: 1.0
-2024-09-14 21:40:23,669   INFO  cfg.MODEL.ROI_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.code_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
-2024-09-14 21:40:23,669   INFO  
-cfg.MODEL.POST_PROCESSING = edict()
-2024-09-14 21:40:23,669   INFO  cfg.MODEL.POST_PROCESSING.RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
-2024-09-14 21:40:23,669   INFO  cfg.MODEL.POST_PROCESSING.SCORE_THRESH: 0.3
-2024-09-14 21:40:23,669   INFO  cfg.MODEL.POST_PROCESSING.OUTPUT_RAW_SCORE: False
-2024-09-14 21:40:23,669   INFO  cfg.MODEL.POST_PROCESSING.EVAL_METRIC: kitti
-2024-09-14 21:40:23,669   INFO  
-cfg.MODEL.POST_PROCESSING.NMS_CONFIG = edict()
-2024-09-14 21:40:23,669   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.MULTI_CLASSES_NMS: False
-2024-09-14 21:40:23,669   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_TYPE: nms_gpu
-2024-09-14 21:40:23,669   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_THRESH: 0.1
-2024-09-14 21:40:23,669   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_PRE_MAXSIZE: 4096
-2024-09-14 21:40:23,669   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_POST_MAXSIZE: 500
-2024-09-14 21:40:23,669   INFO  
-cfg.OPTIMIZATION = edict()
-2024-09-14 21:40:23,669   INFO  cfg.OPTIMIZATION.BATCH_SIZE_PER_GPU: 4
-2024-09-14 21:40:23,669   INFO  cfg.OPTIMIZATION.NUM_EPOCHS: 80
-2024-09-14 21:40:23,669   INFO  cfg.OPTIMIZATION.OPTIMIZER: adam_onecycle
-2024-09-14 21:40:23,669   INFO  cfg.OPTIMIZATION.LR: 0.01
-2024-09-14 21:40:23,669   INFO  cfg.OPTIMIZATION.WEIGHT_DECAY: 0.01
-2024-09-14 21:40:23,670   INFO  cfg.OPTIMIZATION.MOMENTUM: 0.9
-2024-09-14 21:40:23,670   INFO  cfg.OPTIMIZATION.MOMS: [0.95, 0.85]
-2024-09-14 21:40:23,670   INFO  cfg.OPTIMIZATION.PCT_START: 0.4
-2024-09-14 21:40:23,670   INFO  cfg.OPTIMIZATION.DIV_FACTOR: 10
-2024-09-14 21:40:23,670   INFO  cfg.OPTIMIZATION.DECAY_STEP_LIST: [35, 45]
-2024-09-14 21:40:23,670   INFO  cfg.OPTIMIZATION.LR_DECAY: 0.1
-2024-09-14 21:40:23,670   INFO  cfg.OPTIMIZATION.LR_CLIP: 1e-07
-2024-09-14 21:40:23,670   INFO  cfg.OPTIMIZATION.LR_WARMUP: False
-2024-09-14 21:40:23,670   INFO  cfg.OPTIMIZATION.WARMUP_EPOCH: 1
-2024-09-14 21:40:23,670   INFO  cfg.OPTIMIZATION.GRAD_NORM_CLIP: 10
-2024-09-14 21:40:23,670   INFO  cfg.TAG: voxel_rcnn_arbe
-2024-09-14 21:40:23,670   INFO  cfg.EXP_GROUP_PATH: dual_radar_models
-2024-09-14 21:40:24,594   INFO  Database filter by difficulty Car: 30178 => 30178
-2024-09-14 21:40:24,595   INFO  Database filter by difficulty Pedestrian: 8791 => 8791
-2024-09-14 21:40:24,596   INFO  Database filter by difficulty Cyclist: 7957 => 7957
-2024-09-14 21:40:24,616   INFO  Loading dual radar dataset
-2024-09-14 21:40:24,981   INFO  Total samples for Dual Radar dataset: 5140
-2024-09-14 21:40:33,589   INFO  VoxelRCNN(
-  (vfe): MeanVFE()
-  (backbone_3d): VoxelBackBone8x(
-    (conv_input): SparseSequential(
-      (0): SubMConv3d(5, 16, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[1, 1, 1], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
-      (1): BatchNorm1d(16, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-      (2): ReLU()
-    )
-    (conv1): SparseSequential(
-      (0): SparseSequential(
-        (0): SubMConv3d(16, 16, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
-        (1): BatchNorm1d(16, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (2): ReLU()
-      )
-    )
-    (conv2): SparseSequential(
-      (0): SparseSequential(
-        (0): SparseConv3d(16, 32, kernel_size=[3, 3, 3], stride=[2, 2, 2], padding=[1, 1, 1], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
-        (1): BatchNorm1d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (2): ReLU()
-      )
-      (1): SparseSequential(
-        (0): SubMConv3d(32, 32, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
-        (1): BatchNorm1d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (2): ReLU()
-      )
-      (2): SparseSequential(
-        (0): SubMConv3d(32, 32, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
-        (1): BatchNorm1d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (2): ReLU()
-      )
-    )
-    (conv3): SparseSequential(
-      (0): SparseSequential(
-        (0): SparseConv3d(32, 64, kernel_size=[3, 3, 3], stride=[2, 2, 2], padding=[1, 1, 1], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
-        (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (2): ReLU()
-      )
-      (1): SparseSequential(
-        (0): SubMConv3d(64, 64, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
-        (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (2): ReLU()
-      )
-      (2): SparseSequential(
-        (0): SubMConv3d(64, 64, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
-        (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (2): ReLU()
-      )
-    )
-    (conv4): SparseSequential(
-      (0): SparseSequential(
-        (0): SparseConv3d(64, 64, kernel_size=[3, 3, 3], stride=[2, 2, 2], padding=[0, 1, 1], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
-        (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (2): ReLU()
-      )
-      (1): SparseSequential(
-        (0): SubMConv3d(64, 64, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
-        (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (2): ReLU()
-      )
-      (2): SparseSequential(
-        (0): SubMConv3d(64, 64, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
-        (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (2): ReLU()
-      )
-    )
-    (conv_out): SparseSequential(
-      (0): SparseConv3d(64, 128, kernel_size=[3, 1, 1], stride=[2, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
-      (1): BatchNorm1d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-      (2): ReLU()
-    )
-  )
-  (map_to_bev_module): HeightCompression(
-    (point_fc): Linear(in_features=96, out_features=64, bias=False)
-    (point_cls): Linear(in_features=64, out_features=1, bias=False)
-    (point_reg): Linear(in_features=64, out_features=3, bias=False)
-  )
-  (pfe): None
-  (backbone_2d): BaseBEVBackbone(
-    (blocks): ModuleList(
-      (0): Sequential(
-        (0): ZeroPad2d(padding=(1, 1, 1, 1), value=0.0)
-        (1): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), bias=False)
-        (2): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (3): ReLU()
-        (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-        (5): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (6): ReLU()
-        (7): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-        (8): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (9): ReLU()
-        (10): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-        (11): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (12): ReLU()
-        (13): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-        (14): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (15): ReLU()
-        (16): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-        (17): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (18): ReLU()
-      )
-      (1): Sequential(
-        (0): ZeroPad2d(padding=(1, 1, 1, 1), value=0.0)
-        (1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), bias=False)
-        (2): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (3): ReLU()
-        (4): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-        (5): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (6): ReLU()
-        (7): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-        (8): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (9): ReLU()
-        (10): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-        (11): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (12): ReLU()
-        (13): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-        (14): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (15): ReLU()
-        (16): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-        (17): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (18): ReLU()
-      )
-    )
-    (deblocks): ModuleList(
-      (0): Sequential(
-        (0): ConvTranspose2d(64, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
-        (1): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (2): ReLU()
-      )
-      (1): Sequential(
-        (0): ConvTranspose2d(128, 128, kernel_size=(2, 2), stride=(2, 2), bias=False)
-        (1): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
-        (2): ReLU()
-      )
-    )
-  )
-  (dense_head): AnchorHeadSingle(
-    (cls_loss_func): SigmoidFocalClassificationLoss()
-    (reg_loss_func): WeightedSmoothL1Loss()
-    (dir_loss_func): WeightedCrossEntropyLoss()
-    (conv_cls): Conv2d(256, 18, kernel_size=(1, 1), stride=(1, 1))
-    (conv_box): Conv2d(256, 42, kernel_size=(1, 1), stride=(1, 1))
-    (conv_dir_cls): Conv2d(256, 12, kernel_size=(1, 1), stride=(1, 1))
-  )
-  (point_head): None
-  (roi_head): VoxelRCNNHead(
-    (proposal_target_layer): ProposalTargetLayer()
-    (reg_loss_func): WeightedSmoothL1Loss()
-    (roi_grid_pool_layers): ModuleList(
-      (0): NeighborVoxelSAModuleMSG(
-        (groupers): ModuleList(
-          (0): VoxelQueryAndGrouping()
-        )
-        (mlps_in): ModuleList(
-          (0): Sequential(
-            (0): Conv1d(32, 32, kernel_size=(1,), stride=(1,), bias=False)
-            (1): BatchNorm1d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-          )
-        )
-        (mlps_pos): ModuleList(
-          (0): Sequential(
-            (0): Conv2d(3, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
-            (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-          )
-        )
-        (mlps_out): ModuleList(
-          (0): Sequential(
-            (0): Conv1d(32, 32, kernel_size=(1,), stride=(1,), bias=False)
-            (1): BatchNorm1d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-            (2): ReLU()
-          )
-        )
-        (relu): ReLU()
-      )
-      (1): NeighborVoxelSAModuleMSG(
-        (groupers): ModuleList(
-          (0): VoxelQueryAndGrouping()
-        )
-        (mlps_in): ModuleList(
-          (0): Sequential(
-            (0): Conv1d(64, 32, kernel_size=(1,), stride=(1,), bias=False)
-            (1): BatchNorm1d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-          )
-        )
-        (mlps_pos): ModuleList(
-          (0): Sequential(
-            (0): Conv2d(3, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
-            (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-          )
-        )
-        (mlps_out): ModuleList(
-          (0): Sequential(
-            (0): Conv1d(32, 32, kernel_size=(1,), stride=(1,), bias=False)
-            (1): BatchNorm1d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-            (2): ReLU()
-          )
-        )
-        (relu): ReLU()
-      )
-      (2): NeighborVoxelSAModuleMSG(
-        (groupers): ModuleList(
-          (0): VoxelQueryAndGrouping()
-        )
-        (mlps_in): ModuleList(
-          (0): Sequential(
-            (0): Conv1d(64, 32, kernel_size=(1,), stride=(1,), bias=False)
-            (1): BatchNorm1d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-          )
-        )
-        (mlps_pos): ModuleList(
-          (0): Sequential(
-            (0): Conv2d(3, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
-            (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-          )
-        )
-        (mlps_out): ModuleList(
-          (0): Sequential(
-            (0): Conv1d(32, 32, kernel_size=(1,), stride=(1,), bias=False)
-            (1): BatchNorm1d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-            (2): ReLU()
-          )
-        )
-        (relu): ReLU()
-      )
-    )
-    (shared_fc_layer): Sequential(
-      (0): Linear(in_features=20736, out_features=256, bias=False)
-      (1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (2): ReLU(inplace=True)
-      (3): Dropout(p=0.3, inplace=False)
-      (4): Linear(in_features=256, out_features=256, bias=False)
-      (5): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (6): ReLU(inplace=True)
-    )
-    (cls_fc_layers): Sequential(
-      (0): Linear(in_features=256, out_features=256, bias=False)
-      (1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (2): ReLU()
-      (3): Dropout(p=0.3, inplace=False)
-      (4): Linear(in_features=256, out_features=256, bias=False)
-      (5): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (6): ReLU()
-    )
-    (cls_pred_layer): Linear(in_features=256, out_features=1, bias=True)
-    (reg_fc_layers): Sequential(
-      (0): Linear(in_features=256, out_features=256, bias=False)
-      (1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (2): ReLU()
-      (3): Dropout(p=0.3, inplace=False)
-      (4): Linear(in_features=256, out_features=256, bias=False)
-      (5): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (6): ReLU()
-    )
-    (reg_pred_layer): Linear(in_features=256, out_features=7, bias=True)
-  )
-)
-2024-09-14 21:40:33,597   INFO  **********************Start training dual_radar_models/voxel_rcnn_arbe(default_heatmap_voxelrcnn_0913)**********************
-Warning: kornia is not installed correctly, please ignore this warning if you do not use CaDDN. Otherwise, it is recommended to use torch version greater than 1.2 to use kornia properly.
-updating :  map_to_bev_module.point_fc.weight
-updating :  map_to_bev_module.point_cls.weight
-updating :  map_to_bev_module.point_reg.weight
-epochs:   0%|          | 0/90 [00:00<?, ?it/s]
-train:   0%|          | 0/1285 [00:00<?, ?it/s][A
-train:   0%|          | 1/1285 [00:06<2:12:37,  6.20s/it][A
-train:   0%|          | 1/1285 [00:06<2:12:37,  6.20s/it, total_it=1][Aepochs:   0%|          | 0/90 [00:06<?, ?it/s, loss=56.6, lr=0.001, d_time=2.81(2.81), f_time=3.38(3.38), b_time=6.20(6.20)]epochs:   0%|          | 0/90 [00:06<?, ?it/s, loss=56.6, lr=0.001, d_time=2.81(2.81), f_time=3.38(3.38), b_time=6.20(6.20)]
-train:   0%|          | 2/1285 [00:06<1:00:48,  2.84s/it, total_it=1][A
-train:   0%|          | 2/1285 [00:06<1:00:48,  2.84s/it, total_it=2][Aepochs:   0%|          | 0/90 [00:07<?, ?it/s, loss=52.3, lr=0.001, d_time=0.00(1.40), f_time=0.49(1.93), b_time=0.49(3.35)]epochs:   0%|          | 0/90 [00:07<?, ?it/s, loss=52.3, lr=0.001, d_time=0.00(1.40), f_time=0.49(1.93), b_time=0.49(3.35)]
-train:   0%|          | 3/1285 [00:07<39:24,  1.84s/it, total_it=2]  [A
-train:   0%|          | 3/1285 [00:07<39:24,  1.84s/it, total_it=3][Aepochs:   0%|          | 0/90 [00:08<?, ?it/s, loss=50.5, lr=0.001, d_time=0.00(0.94), f_time=0.64(1.50), b_time=0.65(2.45)]epochs:   0%|          | 0/90 [00:08<?, ?it/s, loss=50.5, lr=0.001, d_time=0.00(0.94), f_time=0.64(1.50), b_time=0.65(2.45)]
-train:   0%|          | 4/1285 [00:07<28:14,  1.32s/it, total_it=3][A
-train:   0%|          | 4/1285 [00:07<28:14,  1.32s/it, total_it=4][Aepochs:   0%|          | 0/90 [00:08<?, ?it/s, loss=54, lr=0.001, d_time=0.00(0.70), f_time=0.52(1.26), b_time=0.52(1.97)]  epochs:   0%|          | 0/90 [00:08<?, ?it/s, loss=54, lr=0.001, d_time=0.00(0.70), f_time=0.52(1.26), b_time=0.52(1.97)]
-train:   0%|          | 5/1285 [00:08<21:40,  1.02s/it, total_it=4][A
-train:   0%|          | 5/1285 [00:08<21:40,  1.02s/it, total_it=5][Aepochs:   0%|          | 0/90 [00:09<?, ?it/s, loss=58.6, lr=0.001, d_time=0.00(0.56), f_time=0.46(1.10), b_time=0.47(1.67)]epochs:   0%|          | 0/90 [00:09<?, ?it/s, loss=58.6, lr=0.001, d_time=0.00(0.56), f_time=0.46(1.10), b_time=0.47(1.67)]
-train:   0%|          | 6/1285 [00:08<18:55,  1.13it/s, total_it=5][A
-train:   0%|          | 6/1285 [00:08<18:55,  1.13it/s, total_it=6][Aepochs:   0%|          | 0/90 [00:09<?, ?it/s, loss=60.2, lr=0.001, d_time=0.01(0.47), f_time=0.62(1.02), b_time=0.63(1.49)]epochs:   0%|          | 0/90 [00:09<?, ?it/s, loss=60.2, lr=0.001, d_time=0.01(0.47), f_time=0.62(1.02), b_time=0.63(1.49)]
-train:   1%|          | 7/1285 [00:09<17:16,  1.23it/s, total_it=6][A
-train:   1%|          | 7/1285 [00:09<17:16,  1.23it/s, total_it=7][Aepochs:   0%|          | 0/90 [00:10<?, ?it/s, loss=62.6, lr=0.001, d_time=0.00(0.40), f_time=0.64(0.97), b_time=0.65(1.37)]epochs:   0%|          | 0/90 [00:10<?, ?it/s, loss=62.6, lr=0.001, d_time=0.00(0.40), f_time=0.64(0.97), b_time=0.65(1.37)]
-train:   1%|          | 8/1285 [00:10<15:35,  1.37it/s, total_it=7][A
-train:   1%|          | 8/1285 [00:10<15:35,  1.37it/s, total_it=8][Aepochs:   0%|          | 0/90 [00:10<?, ?it/s, loss=61.7, lr=0.001, d_time=0.01(0.35), f_time=0.55(0.91), b_time=0.56(1.27)]epochs:   0%|          | 0/90 [00:10<?, ?it/s, loss=61.7, lr=0.001, d_time=0.01(0.35), f_time=0.55(0.91), b_time=0.56(1.27)]
-train:   1%|          | 9/1285 [00:10<14:26,  1.47it/s, total_it=8][A
-train:   1%|          | 9/1285 [00:10<14:26,  1.47it/s, total_it=9][Aepochs:   0%|          | 0/90 [00:11<?, ?it/s, loss=54.6, lr=0.001, d_time=0.00(0.31), f_time=0.54(0.87), b_time=0.55(1.19)]epochs:   0%|          | 0/90 [00:11<?, ?it/s, loss=54.6, lr=0.001, d_time=0.00(0.31), f_time=0.54(0.87), b_time=0.55(1.19)]
-train:   1%|          | 10/1285 [00:11<13:34,  1.57it/s, total_it=9][A
-train:   1%|          | 10/1285 [00:11<13:34,  1.57it/s, total_it=10][Aepochs:   0%|          | 0/90 [00:12<?, ?it/s, loss=53.6, lr=0.001, d_time=0.00(0.28), f_time=0.53(0.84), b_time=0.54(1.13)]epochs:   0%|          | 0/90 [00:12<?, ?it/s, loss=53.6, lr=0.001, d_time=0.00(0.28), f_time=0.53(0.84), b_time=0.54(1.13)]
-train:   1%|          | 11/1285 [00:11<13:37,  1.56it/s, total_it=10][A
-train:   1%|          | 11/1285 [00:11<13:37,  1.56it/s, total_it=11][Aepochs:   0%|          | 0/90 [00:12<?, ?it/s, loss=53.9, lr=0.001, d_time=0.00(0.26), f_time=0.62(0.82), b_time=0.63(1.08)]epochs:   0%|          | 0/90 [00:12<?, ?it/s, loss=53.9, lr=0.001, d_time=0.00(0.26), f_time=0.62(0.82), b_time=0.63(1.08)]
-train:   1%|          | 12/1285 [00:12<13:14,  1.60it/s, total_it=11][A
-train:   1%|          | 12/1285 [00:12<13:14,  1.60it/s, total_it=12][Aepochs:   0%|          | 0/90 [00:13<?, ?it/s, loss=50.5, lr=0.001, d_time=0.01(0.24), f_time=0.57(0.80), b_time=0.58(1.04)]epochs:   0%|          | 0/90 [00:13<?, ?it/s, loss=50.5, lr=0.001, d_time=0.01(0.24), f_time=0.57(0.80), b_time=0.58(1.04)]
-train:   1%|          | 13/1285 [00:13<12:33,  1.69it/s, total_it=12][A
-train:   1%|          | 13/1285 [00:13<12:33,  1.69it/s, total_it=13][Aepochs:   0%|          | 0/90 [00:13<?, ?it/s, loss=59.2, lr=0.001, d_time=0.00(0.22), f_time=0.51(0.78), b_time=0.51(1.00)]epochs:   0%|          | 0/90 [00:13<?, ?it/s, loss=59.2, lr=0.001, d_time=0.00(0.22), f_time=0.51(0.78), b_time=0.51(1.00)]
-train:   1%|          | 14/1285 [00:13<12:44,  1.66it/s, total_it=13][A
-train:   1%|          | 14/1285 [00:13<12:44,  1.66it/s, total_it=14][Aepochs:   0%|          | 0/90 [00:14<?, ?it/s, loss=52.9, lr=0.001, d_time=0.00(0.20), f_time=0.61(0.76), b_time=0.62(0.97)]epochs:   0%|          | 0/90 [00:14<?, ?it/s, loss=52.9, lr=0.001, d_time=0.00(0.20), f_time=0.61(0.76), b_time=0.62(0.97)]
-train:   1%|          | 15/1285 [00:14<12:49,  1.65it/s, total_it=14][A
-train:   1%|          | 15/1285 [00:14<12:49,  1.65it/s, total_it=15][Aepochs:   0%|          | 0/90 [00:15<?, ?it/s, loss=61.6, lr=0.001, d_time=0.00(0.19), f_time=0.59(0.75), b_time=0.61(0.95)]epochs:   0%|          | 0/90 [00:15<?, ?it/s, loss=61.6, lr=0.001, d_time=0.00(0.19), f_time=0.59(0.75), b_time=0.61(0.95)]
-train:   1%|          | 16/1285 [00:14<12:25,  1.70it/s, total_it=15][A
-train:   1%|          | 16/1285 [00:14<12:25,  1.70it/s, total_it=16][Aepochs:   0%|          | 0/90 [00:15<?, ?it/s, loss=56.9, lr=0.001, d_time=0.00(0.18), f_time=0.53(0.74), b_time=0.54(0.92)]epochs:   0%|          | 0/90 [00:15<?, ?it/s, loss=56.9, lr=0.001, d_time=0.00(0.18), f_time=0.53(0.74), b_time=0.54(0.92)]
-train:   1%|▏         | 17/1285 [00:15<12:57,  1.63it/s, total_it=16][A
-train:   1%|▏         | 17/1285 [00:15<12:57,  1.63it/s, total_it=17][Aepochs:   0%|          | 0/90 [00:16<?, ?it/s, loss=51.4, lr=0.001, d_time=0.00(0.17), f_time=0.66(0.73), b_time=0.67(0.91)]epochs:   0%|          | 0/90 [00:16<?, ?it/s, loss=51.4, lr=0.001, d_time=0.00(0.17), f_time=0.66(0.73), b_time=0.67(0.91)]
-train:   1%|▏         | 18/1285 [00:16<12:14,  1.73it/s, total_it=17][A
-train:   1%|▏         | 18/1285 [00:16<12:14,  1.73it/s, total_it=18][Aepochs:   0%|          | 0/90 [00:16<?, ?it/s, loss=54.7, lr=0.001, d_time=0.01(0.16), f_time=0.47(0.72), b_time=0.49(0.88)]epochs:   0%|          | 0/90 [00:16<?, ?it/s, loss=54.7, lr=0.001, d_time=0.01(0.16), f_time=0.47(0.72), b_time=0.49(0.88)]
-train:   1%|▏         | 19/1285 [00:16<11:47,  1.79it/s, total_it=18][A
-train:   1%|▏         | 19/1285 [00:16<11:47,  1.79it/s, total_it=19][Aepochs:   0%|          | 0/90 [00:17<?, ?it/s, loss=52.9, lr=0.001, d_time=0.00(0.15), f_time=0.50(0.71), b_time=0.51(0.86)]epochs:   0%|          | 0/90 [00:17<?, ?it/s, loss=52.9, lr=0.001, d_time=0.00(0.15), f_time=0.50(0.71), b_time=0.51(0.86)]
-train:   2%|▏         | 20/1285 [00:17<12:00,  1.76it/s, total_it=19][A
-train:   2%|▏         | 20/1285 [00:17<12:00,  1.76it/s, total_it=20][Aepochs:   0%|          | 0/90 [00:17<?, ?it/s, loss=52.1, lr=0.001, d_time=0.00(0.14), f_time=0.58(0.70), b_time=0.59(0.85)]epochs:   0%|          | 0/90 [00:17<?, ?it/s, loss=52.1, lr=0.001, d_time=0.00(0.14), f_time=0.58(0.70), b_time=0.59(0.85)]
-train:   2%|▏         | 21/1285 [00:17<11:10,  1.88it/s, total_it=20][A
-train:   2%|▏         | 21/1285 [00:17<11:10,  1.88it/s, total_it=21][Aepochs:   0%|          | 0/90 [00:18<?, ?it/s, loss=52.8, lr=0.001, d_time=0.00(0.14), f_time=0.43(0.69), b_time=0.43(0.83)]epochs:   0%|          | 0/90 [00:18<?, ?it/s, loss=52.8, lr=0.001, d_time=0.00(0.14), f_time=0.43(0.69), b_time=0.43(0.83)]
-train:   2%|▏         | 22/1285 [00:18<11:04,  1.90it/s, total_it=21][A
-train:   2%|▏         | 22/1285 [00:18<11:04,  1.90it/s, total_it=22][Aepochs:   0%|          | 0/90 [00:18<?, ?it/s, loss=55, lr=0.001, d_time=0.00(0.13), f_time=0.51(0.68), b_time=0.51(0.82)]  epochs:   0%|          | 0/90 [00:18<?, ?it/s, loss=55, lr=0.001, d_time=0.00(0.13), f_time=0.51(0.68), b_time=0.51(0.82)]
-train:   2%|▏         | 23/1285 [00:18<12:05,  1.74it/s, total_it=22][A
-train:   2%|▏         | 23/1285 [00:18<12:05,  1.74it/s, total_it=23][Aepochs:   0%|          | 0/90 [00:19<?, ?it/s, loss=53.9, lr=0.001, d_time=0.01(0.12), f_time=0.67(0.68), b_time=0.68(0.81)]epochs:   0%|          | 0/90 [00:19<?, ?it/s, loss=53.9, lr=0.001, d_time=0.01(0.12), f_time=0.67(0.68), b_time=0.68(0.81)]
-train:   2%|▏         | 24/1285 [00:19<12:11,  1.72it/s, total_it=23][A
-train:   2%|▏         | 24/1285 [00:19<12:11,  1.72it/s, total_it=24][Aepochs:   0%|          | 0/90 [00:20<?, ?it/s, loss=53.4, lr=0.001, d_time=0.00(0.12), f_time=0.58(0.68), b_time=0.59(0.80)]epochs:   0%|          | 0/90 [00:20<?, ?it/s, loss=53.4, lr=0.001, d_time=0.00(0.12), f_time=0.58(0.68), b_time=0.59(0.80)]
-train:   2%|▏         | 25/1285 [00:19<12:23,  1.70it/s, total_it=24][A
-train:   2%|▏         | 25/1285 [00:19<12:23,  1.70it/s, total_it=25][Aepochs:   0%|          | 0/90 [00:20<?, ?it/s, loss=54.7, lr=0.001, d_time=0.01(0.12), f_time=0.60(0.67), b_time=0.61(0.79)]epochs:   0%|          | 0/90 [00:20<?, ?it/s, loss=54.7, lr=0.001, d_time=0.01(0.12), f_time=0.60(0.67), b_time=0.61(0.79)]
-train:   2%|▏         | 26/1285 [00:20<12:35,  1.67it/s, total_it=25][A
-train:   2%|▏         | 26/1285 [00:20<12:35,  1.67it/s, total_it=26][Aepochs:   0%|          | 0/90 [00:21<?, ?it/s, loss=54.9, lr=0.001, d_time=0.01(0.11), f_time=0.61(0.67), b_time=0.62(0.79)]epochs:   0%|          | 0/90 [00:21<?, ?it/s, loss=54.9, lr=0.001, d_time=0.01(0.11), f_time=0.61(0.67), b_time=0.62(0.79)]
-train:   2%|▏         | 27/1285 [00:21<12:59,  1.61it/s, total_it=26][A
-train:   2%|▏         | 27/1285 [00:21<12:59,  1.61it/s, total_it=27][Aepochs:   0%|          | 0/90 [00:22<?, ?it/s, loss=56.1, lr=0.001, d_time=0.00(0.11), f_time=0.66(0.67), b_time=0.66(0.78)]epochs:   0%|          | 0/90 [00:22<?, ?it/s, loss=56.1, lr=0.001, d_time=0.00(0.11), f_time=0.66(0.67), b_time=0.66(0.78)]
-train:   2%|▏         | 28/1285 [00:21<12:51,  1.63it/s, total_it=27][A
-train:   2%|▏         | 28/1285 [00:21<12:51,  1.63it/s, total_it=28][Aepochs:   0%|          | 0/90 [00:22<?, ?it/s, loss=55.5, lr=0.001, d_time=0.00(0.10), f_time=0.59(0.67), b_time=0.60(0.78)]epochs:   0%|          | 0/90 [00:22<?, ?it/s, loss=55.5, lr=0.001, d_time=0.00(0.10), f_time=0.59(0.67), b_time=0.60(0.78)]
-train:   2%|▏         | 29/1285 [00:22<13:26,  1.56it/s, total_it=28][A
-train:   2%|▏         | 29/1285 [00:22<13:26,  1.56it/s, total_it=29][Aepochs:   0%|          | 0/90 [00:23<?, ?it/s, loss=56.1, lr=0.001, d_time=0.01(0.10), f_time=0.68(0.67), b_time=0.69(0.77)]epochs:   0%|          | 0/90 [00:23<?, ?it/s, loss=56.1, lr=0.001, d_time=0.01(0.10), f_time=0.68(0.67), b_time=0.69(0.77)]
-train:   2%|▏         | 30/1285 [00:23<14:06,  1.48it/s, total_it=29][A
-train:   2%|▏         | 30/1285 [00:23<14:06,  1.48it/s, total_it=30][Aepochs:   0%|          | 0/90 [00:24<?, ?it/s, loss=55.7, lr=0.001, d_time=0.00(0.10), f_time=0.74(0.67), b_time=0.75(0.77)]epochs:   0%|          | 0/90 [00:24<?, ?it/s, loss=55.7, lr=0.001, d_time=0.00(0.10), f_time=0.74(0.67), b_time=0.75(0.77)]
-train:   2%|▏         | 31/1285 [00:23<13:28,  1.55it/s, total_it=30][A
-train:   2%|▏         | 31/1285 [00:23<13:28,  1.55it/s, total_it=31][Aepochs:   0%|          | 0/90 [00:24<?, ?it/s, loss=58, lr=0.001, d_time=0.01(0.09), f_time=0.56(0.67), b_time=0.57(0.77)]  epochs:   0%|          | 0/90 [00:24<?, ?it/s, loss=58, lr=0.001, d_time=0.01(0.09), f_time=0.56(0.67), b_time=0.57(0.77)]
-train:   2%|▏         | 32/1285 [00:24<12:16,  1.70it/s, total_it=31][A
-train:   2%|▏         | 32/1285 [00:24<12:16,  1.70it/s, total_it=32][Aepochs:   0%|          | 0/90 [00:25<?, ?it/s, loss=56.5, lr=0.001, d_time=0.00(0.09), f_time=0.45(0.66), b_time=0.45(0.76)]epochs:   0%|          | 0/90 [00:25<?, ?it/s, loss=56.5, lr=0.001, d_time=0.00(0.09), f_time=0.45(0.66), b_time=0.45(0.76)]
-train:   3%|▎         | 33/1285 [00:24<12:27,  1.68it/s, total_it=32][A
-train:   3%|▎         | 33/1285 [00:24<12:27,  1.68it/s, total_it=33][Aepochs:   0%|          | 0/90 [00:25<?, ?it/s, loss=58, lr=0.001, d_time=0.00(0.09), f_time=0.61(0.66), b_time=0.62(0.75)]  epochs:   0%|          | 0/90 [00:25<?, ?it/s, loss=58, lr=0.001, d_time=0.00(0.09), f_time=0.61(0.66), b_time=0.62(0.75)]
-train:   3%|▎         | 34/1285 [00:25<12:18,  1.69it/s, total_it=33][A
-train:   3%|▎         | 34/1285 [00:25<12:18,  1.69it/s, total_it=34][Aepochs:   0%|          | 0/90 [00:26<?, ?it/s, loss=63.4, lr=0.001, d_time=0.01(0.09), f_time=0.56(0.65), b_time=0.57(0.75)]epochs:   0%|          | 0/90 [00:26<?, ?it/s, loss=63.4, lr=0.001, d_time=0.01(0.09), f_time=0.56(0.65), b_time=0.57(0.75)]
-train:   3%|▎         | 35/1285 [00:26<13:44,  1.52it/s, total_it=34][A
-train:   3%|▎         | 35/1285 [00:26<13:44,  1.52it/s, total_it=35][Aepochs:   0%|          | 0/90 [00:27<?, ?it/s, loss=54.4, lr=0.001, d_time=0.00(0.08), f_time=0.81(0.66), b_time=0.82(0.75)]epochs:   0%|          | 0/90 [00:27<?, ?it/s, loss=54.4, lr=0.001, d_time=0.00(0.08), f_time=0.81(0.66), b_time=0.82(0.75)]
-train:   3%|▎         | 36/1285 [00:26<12:36,  1.65it/s, total_it=35][A
-train:   3%|▎         | 36/1285 [00:26<12:36,  1.65it/s, total_it=36][Aepochs:   0%|          | 0/90 [00:27<?, ?it/s, loss=52.6, lr=0.001, d_time=0.00(0.08), f_time=0.46(0.65), b_time=0.47(0.74)]epochs:   0%|          | 0/90 [00:27<?, ?it/s, loss=52.6, lr=0.001, d_time=0.00(0.08), f_time=0.46(0.65), b_time=0.47(0.74)]
-train:   3%|▎         | 37/1285 [00:27<13:21,  1.56it/s, total_it=36][A
-train:   3%|▎         | 37/1285 [00:27<13:21,  1.56it/s, total_it=37][Aepochs:   0%|          | 0/90 [00:28<?, ?it/s, loss=56, lr=0.001, d_time=0.01(0.08), f_time=0.71(0.66), b_time=0.72(0.74)]  epochs:   0%|          | 0/90 [00:28<?, ?it/s, loss=56, lr=0.001, d_time=0.01(0.08), f_time=0.71(0.66), b_time=0.72(0.74)]
-train:   3%|▎         | 38/1285 [00:28<14:14,  1.46it/s, total_it=37][A
-train:   3%|▎         | 38/1285 [00:28<14:14,  1.46it/s, total_it=38][Aepochs:   0%|          | 0/90 [00:29<?, ?it/s, loss=59.8, lr=0.001, d_time=0.01(0.08), f_time=0.76(0.66), b_time=0.77(0.74)]epochs:   0%|          | 0/90 [00:29<?, ?it/s, loss=59.8, lr=0.001, d_time=0.01(0.08), f_time=0.76(0.66), b_time=0.77(0.74)]
-train:   3%|▎         | 39/1285 [00:28<13:32,  1.53it/s, total_it=38][A
-train:   3%|▎         | 39/1285 [00:28<13:32,  1.53it/s, total_it=39][Aepochs:   0%|          | 0/90 [00:29<?, ?it/s, loss=58, lr=0.001, d_time=0.00(0.08), f_time=0.57(0.66), b_time=0.57(0.74)]  epochs:   0%|          | 0/90 [00:29<?, ?it/s, loss=58, lr=0.001, d_time=0.00(0.08), f_time=0.57(0.66), b_time=0.57(0.74)]
-train:   3%|▎         | 40/1285 [00:29<12:54,  1.61it/s, total_it=39][A
-train:   3%|▎         | 40/1285 [00:29<12:54,  1.61it/s, total_it=40][Aepochs:   0%|          | 0/90 [00:30<?, ?it/s, loss=63.6, lr=0.001, d_time=0.00(0.07), f_time=0.55(0.65), b_time=0.55(0.73)]epochs:   0%|          | 0/90 [00:30<?, ?it/s, loss=63.6, lr=0.001, d_time=0.00(0.07), f_time=0.55(0.65), b_time=0.55(0.73)]
-train:   3%|▎         | 41/1285 [00:30<13:14,  1.57it/s, total_it=40][A
-train:   3%|▎         | 41/1285 [00:30<13:14,  1.57it/s, total_it=41][Aepochs:   0%|          | 0/90 [00:30<?, ?it/s, loss=55.2, lr=0.001, d_time=0.00(0.07), f_time=0.67(0.65), b_time=0.67(0.73)]epochs:   0%|          | 0/90 [00:30<?, ?it/s, loss=55.2, lr=0.001, d_time=0.00(0.07), f_time=0.67(0.65), b_time=0.67(0.73)]
-train:   3%|▎         | 42/1285 [00:30<12:22,  1.67it/s, total_it=41][A
-train:   3%|▎         | 42/1285 [00:30<12:22,  1.67it/s, total_it=42][Aepochs:   0%|          | 0/90 [00:31<?, ?it/s, loss=56.3, lr=0.001, d_time=0.00(0.07), f_time=0.49(0.65), b_time=0.50(0.72)]epochs:   0%|          | 0/90 [00:31<?, ?it/s, loss=56.3, lr=0.001, d_time=0.00(0.07), f_time=0.49(0.65), b_time=0.50(0.72)]
-train:   3%|▎         | 43/1285 [00:31<12:26,  1.66it/s, total_it=42][A
-train:   3%|▎         | 43/1285 [00:31<12:26,  1.66it/s, total_it=43][Aepochs:   0%|          | 0/90 [00:32<?, ?it/s, loss=56.9, lr=0.001, d_time=0.00(0.07), f_time=0.59(0.65), b_time=0.60(0.72)]epochs:   0%|          | 0/90 [00:32<?, ?it/s, loss=56.9, lr=0.001, d_time=0.00(0.07), f_time=0.59(0.65), b_time=0.60(0.72)]
-train:   3%|▎         | 44/1285 [00:32<13:18,  1.55it/s, total_it=43][A
-train:   3%|▎         | 44/1285 [00:32<13:18,  1.55it/s, total_it=44][Aepochs:   0%|          | 0/90 [00:32<?, ?it/s, loss=60.4, lr=0.001, d_time=0.00(0.07), f_time=0.73(0.65), b_time=0.74(0.72)]epochs:   0%|          | 0/90 [00:32<?, ?it/s, loss=60.4, lr=0.001, d_time=0.00(0.07), f_time=0.73(0.65), b_time=0.74(0.72)]
-train:   4%|▎         | 45/1285 [00:32<12:51,  1.61it/s, total_it=44][A
-train:   4%|▎         | 45/1285 [00:32<12:51,  1.61it/s, total_it=45][Aepochs:   0%|          | 0/90 [00:33<?, ?it/s, loss=56, lr=0.001, d_time=0.00(0.07), f_time=0.56(0.65), b_time=0.56(0.72)]  epochs:   0%|          | 0/90 [00:33<?, ?it/s, loss=56, lr=0.001, d_time=0.00(0.07), f_time=0.56(0.65), b_time=0.56(0.72)]
-train:   4%|▎         | 46/1285 [00:33<11:44,  1.76it/s, total_it=45][A
-train:   4%|▎         | 46/1285 [00:33<11:44,  1.76it/s, total_it=46][Aepochs:   0%|          | 0/90 [00:33<?, ?it/s, loss=45.2, lr=0.001, d_time=0.00(0.06), f_time=0.44(0.64), b_time=0.44(0.71)]epochs:   0%|          | 0/90 [00:33<?, ?it/s, loss=45.2, lr=0.001, d_time=0.00(0.06), f_time=0.44(0.64), b_time=0.44(0.71)]
-train:   4%|▎         | 47/1285 [00:33<11:14,  1.84it/s, total_it=46][A
-train:   4%|▎         | 47/1285 [00:33<11:14,  1.84it/s, total_it=47][Aepochs:   0%|          | 0/90 [00:34<?, ?it/s, loss=58.6, lr=0.001, d_time=0.01(0.06), f_time=0.47(0.64), b_time=0.48(0.71)]epochs:   0%|          | 0/90 [00:34<?, ?it/s, loss=58.6, lr=0.001, d_time=0.01(0.06), f_time=0.47(0.64), b_time=0.48(0.71)]
-train:   4%|▎         | 48/1285 [00:34<12:26,  1.66it/s, total_it=47][A
-train:   4%|▎         | 48/1285 [00:34<12:26,  1.66it/s, total_it=48][Aepochs:   0%|          | 0/90 [00:35<?, ?it/s, loss=57.7, lr=0.001, d_time=0.00(0.06), f_time=0.73(0.64), b_time=0.74(0.71)]epochs:   0%|          | 0/90 [00:35<?, ?it/s, loss=57.7, lr=0.001, d_time=0.00(0.06), f_time=0.73(0.64), b_time=0.74(0.71)]
-train:   4%|▍         | 49/1285 [00:34<11:28,  1.80it/s, total_it=48][A
-train:   4%|▍         | 49/1285 [00:34<11:28,  1.80it/s, total_it=49][Aepochs:   0%|          | 0/90 [00:35<?, ?it/s, loss=52.1, lr=0.001, d_time=0.00(0.06), f_time=0.43(0.64), b_time=0.44(0.70)]epochs:   0%|          | 0/90 [00:35<?, ?it/s, loss=52.1, lr=0.001, d_time=0.00(0.06), f_time=0.43(0.64), b_time=0.44(0.70)]
-train:   4%|▍         | 50/1285 [00:35<11:34,  1.78it/s, total_it=49][A
-train:   4%|▍         | 50/1285 [00:35<11:34,  1.78it/s, total_it=50][Aepochs:   0%|          | 0/90 [00:36<?, ?it/s, loss=55.5, lr=0.001, d_time=0.01(0.06), f_time=0.56(0.64), b_time=0.57(0.70)]epochs:   0%|          | 0/90 [00:36<?, ?it/s, loss=55.5, lr=0.001, d_time=0.01(0.06), f_time=0.56(0.64), b_time=0.57(0.70)]
-train:   4%|▍         | 51/1285 [00:35<12:24,  1.66it/s, total_it=50][A
-train:   4%|▍         | 51/1285 [00:35<12:24,  1.66it/s, total_it=51][Aepochs:   0%|          | 0/90 [00:36<?, ?it/s, loss=58, lr=0.001, d_time=0.00(0.06), f_time=0.69(0.64), b_time=0.70(0.70)]  epochs:   0%|          | 0/90 [00:36<?, ?it/s, loss=58, lr=0.001, d_time=0.00(0.06), f_time=0.69(0.64), b_time=0.70(0.70)]
-train:   4%|▍         | 52/1285 [00:36<12:10,  1.69it/s, total_it=51][A
-train:   4%|▍         | 52/1285 [00:36<12:10,  1.69it/s, total_it=52][Aepochs:   0%|          | 0/90 [00:37<?, ?it/s, loss=54.9, lr=0.001, d_time=0.00(0.06), f_time=0.55(0.63), b_time=0.56(0.70)]epochs:   0%|          | 0/90 [00:37<?, ?it/s, loss=54.9, lr=0.001, d_time=0.00(0.06), f_time=0.55(0.63), b_time=0.56(0.70)]
-train:   4%|▍         | 53/1285 [00:37<11:45,  1.75it/s, total_it=52][A
-train:   4%|▍         | 53/1285 [00:37<11:45,  1.75it/s, total_it=53][Aepochs:   0%|          | 0/90 [00:37<?, ?it/s, loss=57.4, lr=0.001, d_time=0.00(0.06), f_time=0.51(0.63), b_time=0.52(0.69)]epochs:   0%|          | 0/90 [00:37<?, ?it/s, loss=57.4, lr=0.001, d_time=0.00(0.06), f_time=0.51(0.63), b_time=0.52(0.69)]
-train:   4%|▍         | 54/1285 [00:37<10:58,  1.87it/s, total_it=53][A
-train:   4%|▍         | 54/1285 [00:37<10:58,  1.87it/s, total_it=54][Aepochs:   0%|          | 0/90 [00:38<?, ?it/s, loss=56.9, lr=0.001, d_time=0.00(0.06), f_time=0.44(0.63), b_time=0.44(0.69)]epochs:   0%|          | 0/90 [00:38<?, ?it/s, loss=56.9, lr=0.001, d_time=0.00(0.06), f_time=0.44(0.63), b_time=0.44(0.69)]
-train:   4%|▍         | 55/1285 [00:38<10:55,  1.88it/s, total_it=54][A
-train:   4%|▍         | 55/1285 [00:38<10:55,  1.88it/s, total_it=55][Aepochs:   0%|          | 0/90 [00:38<?, ?it/s, loss=49.4, lr=0.001, d_time=0.00(0.05), f_time=0.52(0.63), b_time=0.52(0.69)]epochs:   0%|          | 0/90 [00:38<?, ?it/s, loss=49.4, lr=0.001, d_time=0.00(0.05), f_time=0.52(0.63), b_time=0.52(0.69)]
-train:   4%|▍         | 56/1285 [00:38<12:34,  1.63it/s, total_it=55][A
-train:   4%|▍         | 56/1285 [00:38<12:34,  1.63it/s, total_it=56][Aepochs:   0%|          | 0/90 [00:39<?, ?it/s, loss=53.4, lr=0.001, d_time=0.00(0.05), f_time=0.80(0.63), b_time=0.80(0.69)]epochs:   0%|          | 0/90 [00:39<?, ?it/s, loss=53.4, lr=0.001, d_time=0.00(0.05), f_time=0.80(0.63), b_time=0.80(0.69)]
-train:   4%|▍         | 57/1285 [00:39<12:00,  1.70it/s, total_it=56][A
-train:   4%|▍         | 57/1285 [00:39<12:00,  1.70it/s, total_it=57][Aepochs:   0%|          | 0/90 [00:40<?, ?it/s, loss=52.1, lr=0.001, d_time=0.00(0.05), f_time=0.51(0.63), b_time=0.52(0.69)]epochs:   0%|          | 0/90 [00:40<?, ?it/s, loss=52.1, lr=0.001, d_time=0.00(0.05), f_time=0.51(0.63), b_time=0.52(0.69)]
-train:   5%|▍         | 58/1285 [00:39<11:58,  1.71it/s, total_it=57][A
-train:   5%|▍         | 58/1285 [00:39<11:58,  1.71it/s, total_it=58][Aepochs:   0%|          | 0/90 [00:40<?, ?it/s, loss=49, lr=0.001, d_time=0.00(0.05), f_time=0.56(0.63), b_time=0.58(0.68)]  epochs:   0%|          | 0/90 [00:40<?, ?it/s, loss=49, lr=0.001, d_time=0.00(0.05), f_time=0.56(0.63), b_time=0.58(0.68)]
-train:   5%|▍         | 59/1285 [00:40<11:58,  1.71it/s, total_it=58][A
-train:   5%|▍         | 59/1285 [00:40<11:58,  1.71it/s, total_it=59][Aepochs:   0%|          | 0/90 [00:41<?, ?it/s, loss=58.9, lr=0.001, d_time=0.00(0.05), f_time=0.58(0.63), b_time=0.58(0.68)]epochs:   0%|          | 0/90 [00:41<?, ?it/s, loss=58.9, lr=0.001, d_time=0.00(0.05), f_time=0.58(0.63), b_time=0.58(0.68)]
-train:   5%|▍         | 60/1285 [00:41<11:37,  1.76it/s, total_it=59][A
-train:   5%|▍         | 60/1285 [00:41<11:37,  1.76it/s, total_it=60][Aepochs:   0%|          | 0/90 [00:41<?, ?it/s, loss=54.9, lr=0.001, d_time=0.00(0.05), f_time=0.51(0.62), b_time=0.52(0.68)]epochs:   0%|          | 0/90 [00:41<?, ?it/s, loss=54.9, lr=0.001, d_time=0.00(0.05), f_time=0.51(0.62), b_time=0.52(0.68)]
-train:   5%|▍         | 61/1285 [00:41<10:59,  1.85it/s, total_it=60][A
-train:   5%|▍         | 61/1285 [00:41<10:59,  1.85it/s, total_it=61][Aepochs:   0%|          | 0/90 [00:42<?, ?it/s, loss=58.2, lr=0.001, d_time=0.00(0.05), f_time=0.46(0.62), b_time=0.46(0.68)]epochs:   0%|          | 0/90 [00:42<?, ?it/s, loss=58.2, lr=0.001, d_time=0.00(0.05), f_time=0.46(0.62), b_time=0.46(0.68)]
-train:   5%|▍         | 62/1285 [00:42<11:39,  1.75it/s, total_it=61][A
-train:   5%|▍         | 62/1285 [00:42<11:39,  1.75it/s, total_it=62][Aepochs:   0%|          | 0/90 [00:42<?, ?it/s, loss=52.1, lr=0.001, d_time=0.00(0.05), f_time=0.63(0.62), b_time=0.64(0.68)]epochs:   0%|          | 0/90 [00:42<?, ?it/s, loss=52.1, lr=0.001, d_time=0.00(0.05), f_time=0.63(0.62), b_time=0.64(0.68)]
-train:   5%|▍         | 63/1285 [00:42<11:45,  1.73it/s, total_it=62][A
-train:   5%|▍         | 63/1285 [00:42<11:45,  1.73it/s, total_it=63][Aepochs:   0%|          | 0/90 [00:43<?, ?it/s, loss=58.9, lr=0.001, d_time=0.00(0.05), f_time=0.58(0.62), b_time=0.59(0.67)]epochs:   0%|          | 0/90 [00:43<?, ?it/s, loss=58.9, lr=0.001, d_time=0.00(0.05), f_time=0.58(0.62), b_time=0.59(0.67)]
-train:   5%|▍         | 64/1285 [00:43<11:23,  1.79it/s, total_it=63][A
-train:   5%|▍         | 64/1285 [00:43<11:23,  1.79it/s, total_it=64][Aepochs:   0%|          | 0/90 [00:44<?, ?it/s, loss=55.3, lr=0.001, d_time=0.00(0.05), f_time=0.51(0.62), b_time=0.52(0.67)]epochs:   0%|          | 0/90 [00:44<?, ?it/s, loss=55.3, lr=0.001, d_time=0.00(0.05), f_time=0.51(0.62), b_time=0.52(0.67)]
-train:   5%|▌         | 65/1285 [00:43<11:42,  1.74it/s, total_it=64][A
-train:   5%|▌         | 65/1285 [00:43<11:42,  1.74it/s, total_it=65][Aepochs:   0%|          | 0/90 [00:44<?, ?it/s, loss=55.7, lr=0.001, d_time=0.01(0.05), f_time=0.60(0.62), b_time=0.61(0.67)]epochs:   0%|          | 0/90 [00:44<?, ?it/s, loss=55.7, lr=0.001, d_time=0.01(0.05), f_time=0.60(0.62), b_time=0.61(0.67)]
-train:   5%|▌         | 66/1285 [00:44<11:00,  1.84it/s, total_it=65][A
-train:   5%|▌         | 66/1285 [00:44<11:00,  1.84it/s, total_it=66][Aepochs:   0%|          | 0/90 [00:45<?, ?it/s, loss=62.9, lr=0.001, d_time=0.00(0.05), f_time=0.45(0.62), b_time=0.46(0.67)]epochs:   0%|          | 0/90 [00:45<?, ?it/s, loss=62.9, lr=0.001, d_time=0.00(0.05), f_time=0.45(0.62), b_time=0.46(0.67)]
-train:   5%|▌         | 67/1285 [00:44<10:46,  1.88it/s, total_it=66][A
-train:   5%|▌         | 67/1285 [00:44<10:46,  1.88it/s, total_it=67][Aepochs:   0%|          | 0/90 [00:45<?, ?it/s, loss=64.6, lr=0.001, d_time=0.00(0.04), f_time=0.50(0.61), b_time=0.50(0.66)]epochs:   0%|          | 0/90 [00:45<?, ?it/s, loss=64.6, lr=0.001, d_time=0.00(0.04), f_time=0.50(0.61), b_time=0.50(0.66)]
-train:   5%|▌         | 68/1285 [00:45<11:17,  1.80it/s, total_it=67][A
-train:   5%|▌         | 68/1285 [00:45<11:17,  1.80it/s, total_it=68][Aepochs:   0%|          | 0/90 [00:46<?, ?it/s, loss=67.6, lr=0.001, d_time=0.00(0.04), f_time=0.60(0.61), b_time=0.61(0.66)]epochs:   0%|          | 0/90 [00:46<?, ?it/s, loss=67.6, lr=0.001, d_time=0.00(0.04), f_time=0.60(0.61), b_time=0.61(0.66)]
-train:   5%|▌         | 69/1285 [00:45<10:21,  1.96it/s, total_it=68][A
-train:   5%|▌         | 69/1285 [00:45<10:21,  1.96it/s, total_it=69][Aepochs:   0%|          | 0/90 [00:46<?, ?it/s, loss=57.2, lr=0.001, d_time=0.01(0.04), f_time=0.38(0.61), b_time=0.39(0.66)]epochs:   0%|          | 0/90 [00:46<?, ?it/s, loss=57.2, lr=0.001, d_time=0.01(0.04), f_time=0.38(0.61), b_time=0.39(0.66)]
-train:   5%|▌         | 70/1285 [00:46<10:56,  1.85it/s, total_it=69][A
-train:   5%|▌         | 70/1285 [00:46<10:56,  1.85it/s, total_it=70][Aepochs:   0%|          | 0/90 [00:47<?, ?it/s, loss=54, lr=0.001, d_time=0.02(0.04), f_time=0.58(0.61), b_time=0.60(0.66)]  epochs:   0%|          | 0/90 [00:47<?, ?it/s, loss=54, lr=0.001, d_time=0.02(0.04), f_time=0.58(0.61), b_time=0.60(0.66)]
-train:   6%|▌         | 71/1285 [00:47<11:12,  1.80it/s, total_it=70][A
-train:   6%|▌         | 71/1285 [00:47<11:12,  1.80it/s, total_it=71][Aepochs:   0%|          | 0/90 [00:47<?, ?it/s, loss=58.5, lr=0.001, d_time=0.01(0.04), f_time=0.57(0.61), b_time=0.58(0.66)]epochs:   0%|          | 0/90 [00:47<?, ?it/s, loss=58.5, lr=0.001, d_time=0.01(0.04), f_time=0.57(0.61), b_time=0.58(0.66)]
-train:   6%|▌         | 72/1285 [00:47<10:39,  1.90it/s, total_it=71][A
-train:   6%|▌         | 72/1285 [00:47<10:39,  1.90it/s, total_it=72][Aepochs:   0%|          | 0/90 [00:48<?, ?it/s, loss=47.3, lr=0.001, d_time=0.00(0.04), f_time=0.45(0.61), b_time=0.46(0.66)]epochs:   0%|          | 0/90 [00:48<?, ?it/s, loss=47.3, lr=0.001, d_time=0.00(0.04), f_time=0.45(0.61), b_time=0.46(0.66)]
-train:   6%|▌         | 73/1285 [00:48<10:50,  1.86it/s, total_it=72][A
-train:   6%|▌         | 73/1285 [00:48<10:50,  1.86it/s, total_it=73][Aepochs:   0%|          | 0/90 [00:48<?, ?it/s, loss=52.8, lr=0.001, d_time=0.00(0.04), f_time=0.55(0.61), b_time=0.55(0.65)]epochs:   0%|          | 0/90 [00:48<?, ?it/s, loss=52.8, lr=0.001, d_time=0.00(0.04), f_time=0.55(0.61), b_time=0.55(0.65)]
-train:   6%|▌         | 74/1285 [00:48<10:52,  1.86it/s, total_it=73][A
-train:   6%|▌         | 74/1285 [00:48<10:52,  1.86it/s, total_it=74][Aepochs:   0%|          | 0/90 [00:49<?, ?it/s, loss=55.8, lr=0.001, d_time=0.00(0.04), f_time=0.54(0.61), b_time=0.54(0.65)]epochs:   0%|          | 0/90 [00:49<?, ?it/s, loss=55.8, lr=0.001, d_time=0.00(0.04), f_time=0.54(0.61), b_time=0.54(0.65)]
-train:   6%|▌         | 75/1285 [00:49<11:11,  1.80it/s, total_it=74][A
-train:   6%|▌         | 75/1285 [00:49<11:11,  1.80it/s, total_it=75][Aepochs:   0%|          | 0/90 [00:50<?, ?it/s, loss=56.2, lr=0.001, d_time=0.00(0.04), f_time=0.58(0.61), b_time=0.59(0.65)]epochs:   0%|          | 0/90 [00:50<?, ?it/s, loss=56.2, lr=0.001, d_time=0.00(0.04), f_time=0.58(0.61), b_time=0.59(0.65)]
-train:   6%|▌         | 76/1285 [00:49<10:39,  1.89it/s, total_it=75][A
-train:   6%|▌         | 76/1285 [00:49<10:39,  1.89it/s, total_it=76][Aepochs:   0%|          | 0/90 [00:50<?, ?it/s, loss=60.4, lr=0.001, d_time=0.00(0.04), f_time=0.45(0.60), b_time=0.46(0.65)]epochs:   0%|          | 0/90 [00:50<?, ?it/s, loss=60.4, lr=0.001, d_time=0.00(0.04), f_time=0.45(0.60), b_time=0.46(0.65)]
-train:   6%|▌         | 77/1285 [00:50<12:14,  1.65it/s, total_it=76][A
-train:   6%|▌         | 77/1285 [00:50<12:14,  1.65it/s, total_it=77][Aepochs:   0%|          | 0/90 [00:51<?, ?it/s, loss=56.1, lr=0.001, d_time=0.01(0.04), f_time=0.78(0.61), b_time=0.79(0.65)]epochs:   0%|          | 0/90 [00:51<?, ?it/s, loss=56.1, lr=0.001, d_time=0.01(0.04), f_time=0.78(0.61), b_time=0.79(0.65)]
-train:   6%|▌         | 78/1285 [00:51<12:19,  1.63it/s, total_it=77][A
-train:   6%|▌         | 78/1285 [00:51<12:19,  1.63it/s, total_it=78][Aepochs:   0%|          | 0/90 [00:51<?, ?it/s, loss=62.5, lr=0.001, d_time=0.00(0.04), f_time=0.61(0.61), b_time=0.62(0.65)]epochs:   0%|          | 0/90 [00:51<?, ?it/s, loss=62.5, lr=0.001, d_time=0.00(0.04), f_time=0.61(0.61), b_time=0.62(0.65)]
-train:   6%|▌         | 79/1285 [00:51<12:10,  1.65it/s, total_it=78][A
-train:   6%|▌         | 79/1285 [00:51<12:10,  1.65it/s, total_it=79][Aepochs:   0%|          | 0/90 [00:52<?, ?it/s, loss=58.5, lr=0.001, d_time=0.00(0.04), f_time=0.58(0.61), b_time=0.59(0.65)]epochs:   0%|          | 0/90 [00:52<?, ?it/s, loss=58.5, lr=0.001, d_time=0.00(0.04), f_time=0.58(0.61), b_time=0.59(0.65)]
-train:   6%|▌         | 80/1285 [00:52<11:48,  1.70it/s, total_it=79][A
-train:   6%|▌         | 80/1285 [00:52<11:48,  1.70it/s, total_it=80][Aepochs:   0%|          | 0/90 [00:53<?, ?it/s, loss=51.8, lr=0.001, d_time=0.00(0.04), f_time=0.54(0.60), b_time=0.54(0.65)]epochs:   0%|          | 0/90 [00:53<?, ?it/s, loss=51.8, lr=0.001, d_time=0.00(0.04), f_time=0.54(0.60), b_time=0.54(0.65)]
-train:   6%|▋         | 81/1285 [00:52<12:19,  1.63it/s, total_it=80][A
-train:   6%|▋         | 81/1285 [00:52<12:19,  1.63it/s, total_it=81][Aepochs:   0%|          | 0/90 [00:53<?, ?it/s, loss=59.8, lr=0.001, d_time=0.01(0.04), f_time=0.66(0.61), b_time=0.67(0.65)]epochs:   0%|          | 0/90 [00:53<?, ?it/s, loss=59.8, lr=0.001, d_time=0.01(0.04), f_time=0.66(0.61), b_time=0.67(0.65)]
-train:   6%|▋         | 82/1285 [00:53<11:48,  1.70it/s, total_it=81][A
-train:   6%|▋         | 82/1285 [00:53<11:48,  1.70it/s, total_it=82][Aepochs:   0%|          | 0/90 [00:54<?, ?it/s, loss=49.3, lr=0.001, d_time=0.00(0.04), f_time=0.52(0.60), b_time=0.52(0.65)]epochs:   0%|          | 0/90 [00:54<?, ?it/s, loss=49.3, lr=0.001, d_time=0.00(0.04), f_time=0.52(0.60), b_time=0.52(0.65)]
-train:   6%|▋         | 83/1285 [00:54<12:20,  1.62it/s, total_it=82][A
-train:   6%|▋         | 83/1285 [00:54<12:20,  1.62it/s, total_it=83][Aepochs:   0%|          | 0/90 [00:54<?, ?it/s, loss=56.3, lr=0.001, d_time=0.00(0.04), f_time=0.67(0.61), b_time=0.68(0.65)]epochs:   0%|          | 0/90 [00:54<?, ?it/s, loss=56.3, lr=0.001, d_time=0.00(0.04), f_time=0.67(0.61), b_time=0.68(0.65)]
-train:   7%|▋         | 84/1285 [00:54<11:52,  1.69it/s, total_it=83][A
-train:   7%|▋         | 84/1285 [00:54<11:52,  1.69it/s, total_it=84][Aepochs:   0%|          | 0/90 [00:55<?, ?it/s, loss=54.6, lr=0.001, d_time=0.01(0.04), f_time=0.53(0.60), b_time=0.54(0.65)]epochs:   0%|          | 0/90 [00:55<?, ?it/s, loss=54.6, lr=0.001, d_time=0.01(0.04), f_time=0.53(0.60), b_time=0.54(0.65)]
-train:   7%|▋         | 85/1285 [00:55<11:58,  1.67it/s, total_it=84][A
-train:   7%|▋         | 85/1285 [00:55<11:58,  1.67it/s, total_it=85][Aepochs:   0%|          | 0/90 [00:56<?, ?it/s, loss=51.1, lr=0.001, d_time=0.01(0.04), f_time=0.60(0.60), b_time=0.61(0.65)]epochs:   0%|          | 0/90 [00:56<?, ?it/s, loss=51.1, lr=0.001, d_time=0.01(0.04), f_time=0.60(0.60), b_time=0.61(0.65)]
-train:   7%|▋         | 86/1285 [00:55<12:23,  1.61it/s, total_it=85][A
-train:   7%|▋         | 86/1285 [00:55<12:23,  1.61it/s, total_it=86][Aepochs:   0%|          | 0/90 [00:56<?, ?it/s, loss=53.9, lr=0.001, d_time=0.00(0.04), f_time=0.66(0.60), b_time=0.66(0.65)]epochs:   0%|          | 0/90 [00:56<?, ?it/s, loss=53.9, lr=0.001, d_time=0.00(0.04), f_time=0.66(0.60), b_time=0.66(0.65)]
-train:   7%|▋         | 87/1285 [00:56<13:03,  1.53it/s, total_it=86][A
-train:   7%|▋         | 87/1285 [00:56<13:03,  1.53it/s, total_it=87][Aepochs:   0%|          | 0/90 [00:57<?, ?it/s, loss=53.2, lr=0.001, d_time=0.01(0.04), f_time=0.72(0.61), b_time=0.73(0.65)]epochs:   0%|          | 0/90 [00:57<?, ?it/s, loss=53.2, lr=0.001, d_time=0.01(0.04), f_time=0.72(0.61), b_time=0.73(0.65)]
-train:   7%|▋         | 88/1285 [00:57<12:40,  1.57it/s, total_it=87][A
-train:   7%|▋         | 88/1285 [00:57<12:40,  1.57it/s, total_it=88][Aepochs:   0%|          | 0/90 [00:58<?, ?it/s, loss=52.2, lr=0.001, d_time=0.00(0.03), f_time=0.58(0.61), b_time=0.59(0.65)]epochs:   0%|          | 0/90 [00:58<?, ?it/s, loss=52.2, lr=0.001, d_time=0.00(0.03), f_time=0.58(0.61), b_time=0.59(0.65)]
-train:   7%|▋         | 89/1285 [00:57<11:52,  1.68it/s, total_it=88][A
-train:   7%|▋         | 89/1285 [00:57<11:52,  1.68it/s, total_it=89][Aepochs:   0%|          | 0/90 [00:58<?, ?it/s, loss=55.3, lr=0.001, d_time=0.00(0.03), f_time=0.48(0.60), b_time=0.49(0.64)]epochs:   0%|          | 0/90 [00:58<?, ?it/s, loss=55.3, lr=0.001, d_time=0.00(0.03), f_time=0.48(0.60), b_time=0.49(0.64)]
-train:   7%|▋         | 90/1285 [00:58<11:32,  1.73it/s, total_it=89][A
-train:   7%|▋         | 90/1285 [00:58<11:32,  1.73it/s, total_it=90][Aepochs:   0%|          | 0/90 [00:59<?, ?it/s, loss=61.1, lr=0.001, d_time=0.01(0.03), f_time=0.53(0.60), b_time=0.54(0.64)]epochs:   0%|          | 0/90 [00:59<?, ?it/s, loss=61.1, lr=0.001, d_time=0.01(0.03), f_time=0.53(0.60), b_time=0.54(0.64)]
-train:   7%|▋         | 91/1285 [00:58<11:50,  1.68it/s, total_it=90][A
-train:   7%|▋         | 91/1285 [00:58<11:50,  1.68it/s, total_it=91][Aepochs:   0%|          | 0/90 [00:59<?, ?it/s, loss=54.6, lr=0.001, d_time=0.01(0.03), f_time=0.61(0.60), b_time=0.62(0.64)]epochs:   0%|          | 0/90 [00:59<?, ?it/s, loss=54.6, lr=0.001, d_time=0.01(0.03), f_time=0.61(0.60), b_time=0.62(0.64)]
-train:   7%|▋         | 92/1285 [00:59<11:41,  1.70it/s, total_it=91][A
-train:   7%|▋         | 92/1285 [00:59<11:41,  1.70it/s, total_it=92][Aepochs:   0%|          | 0/90 [01:00<?, ?it/s, loss=53.5, lr=0.001, d_time=0.00(0.03), f_time=0.55(0.60), b_time=0.56(0.64)]epochs:   0%|          | 0/90 [01:00<?, ?it/s, loss=53.5, lr=0.001, d_time=0.00(0.03), f_time=0.55(0.60), b_time=0.56(0.64)]
-train:   7%|▋         | 93/1285 [01:00<11:12,  1.77it/s, total_it=92][A
-train:   7%|▋         | 93/1285 [01:00<11:12,  1.77it/s, total_it=93][Aepochs:   0%|          | 0/90 [01:00<?, ?it/s, loss=54.1, lr=0.001, d_time=0.01(0.03), f_time=0.49(0.60), b_time=0.50(0.64)]epochs:   0%|          | 0/90 [01:00<?, ?it/s, loss=54.1, lr=0.001, d_time=0.01(0.03), f_time=0.49(0.60), b_time=0.50(0.64)]
-train:   7%|▋         | 94/1285 [01:00<11:18,  1.76it/s, total_it=93][A
-train:   7%|▋         | 94/1285 [01:00<11:18,  1.76it/s, total_it=94][Aepochs:   0%|          | 0/90 [01:01<?, ?it/s, loss=62.1, lr=0.001, d_time=0.01(0.03), f_time=0.57(0.60), b_time=0.58(0.64)]epochs:   0%|          | 0/90 [01:01<?, ?it/s, loss=62.1, lr=0.001, d_time=0.01(0.03), f_time=0.57(0.60), b_time=0.58(0.64)]
-train:   7%|▋         | 95/1285 [01:01<12:31,  1.58it/s, total_it=94][A
-train:   7%|▋         | 95/1285 [01:01<12:31,  1.58it/s, total_it=95][Aepochs:   0%|          | 0/90 [01:02<?, ?it/s, loss=62, lr=0.001, d_time=0.00(0.03), f_time=0.77(0.60), b_time=0.77(0.64)]  epochs:   0%|          | 0/90 [01:02<?, ?it/s, loss=62, lr=0.001, d_time=0.00(0.03), f_time=0.77(0.60), b_time=0.77(0.64)]
-train:   7%|▋         | 96/1285 [01:01<11:18,  1.75it/s, total_it=95][A
-train:   7%|▋         | 96/1285 [01:01<11:18,  1.75it/s, total_it=96][Aepochs:   0%|          | 0/90 [01:02<?, ?it/s, loss=50.9, lr=0.001, d_time=0.00(0.03), f_time=0.42(0.60), b_time=0.42(0.64)]epochs:   0%|          | 0/90 [01:02<?, ?it/s, loss=50.9, lr=0.001, d_time=0.00(0.03), f_time=0.42(0.60), b_time=0.42(0.64)]
-train:   8%|▊         | 97/1285 [01:02<11:43,  1.69it/s, total_it=96][A
-train:   8%|▊         | 97/1285 [01:02<11:43,  1.69it/s, total_it=97][Aepochs:   0%|          | 0/90 [01:03<?, ?it/s, loss=56.5, lr=0.001, d_time=0.00(0.03), f_time=0.63(0.60), b_time=0.64(0.64)]epochs:   0%|          | 0/90 [01:03<?, ?it/s, loss=56.5, lr=0.001, d_time=0.00(0.03), f_time=0.63(0.60), b_time=0.64(0.64)]
-train:   8%|▊         | 98/1285 [01:03<11:43,  1.69it/s, total_it=97][A
-train:   8%|▊         | 98/1285 [01:03<11:43,  1.69it/s, total_it=98][Aepochs:   0%|          | 0/90 [01:03<?, ?it/s, loss=50.9, lr=0.001, d_time=0.01(0.03), f_time=0.58(0.60), b_time=0.59(0.64)]epochs:   0%|          | 0/90 [01:03<?, ?it/s, loss=50.9, lr=0.001, d_time=0.01(0.03), f_time=0.58(0.60), b_time=0.59(0.64)]
-train:   8%|▊         | 99/1285 [01:03<12:37,  1.57it/s, total_it=98][A
-train:   8%|▊         | 99/1285 [01:03<12:37,  1.57it/s, total_it=99][Aepochs:   0%|          | 0/90 [01:04<?, ?it/s, loss=55.1, lr=0.001, d_time=0.01(0.03), f_time=0.73(0.60), b_time=0.74(0.64)]epochs:   0%|          | 0/90 [01:04<?, ?it/s, loss=55.1, lr=0.001, d_time=0.01(0.03), f_time=0.73(0.60), b_time=0.74(0.64)]
-train:   8%|▊         | 100/1285 [01:04<11:49,  1.67it/s, total_it=99][A
-train:   8%|▊         | 100/1285 [01:04<11:49,  1.67it/s, total_it=100][Aepochs:   0%|          | 0/90 [01:05<?, ?it/s, loss=50.7, lr=0.001, d_time=0.00(0.03), f_time=0.50(0.60), b_time=0.50(0.64)]epochs:   0%|          | 0/90 [01:05<?, ?it/s, loss=50.7, lr=0.001, d_time=0.00(0.03), f_time=0.50(0.60), b_time=0.50(0.64)]
-train:   8%|▊         | 101/1285 [01:04<11:58,  1.65it/s, total_it=100][A
-train:   8%|▊         | 101/1285 [01:04<11:58,  1.65it/s, total_it=101][Aepochs:   0%|          | 0/90 [01:05<?, ?it/s, loss=58.9, lr=0.001, d_time=0.01(0.03), f_time=0.61(0.60), b_time=0.62(0.64)]epochs:   0%|          | 0/90 [01:05<?, ?it/s, loss=58.9, lr=0.001, d_time=0.01(0.03), f_time=0.61(0.60), b_time=0.62(0.64)]
-train:   8%|▊         | 102/1285 [01:05<11:27,  1.72it/s, total_it=101][A
-train:   8%|▊         | 102/1285 [01:05<11:27,  1.72it/s, total_it=102][Aepochs:   0%|          | 0/90 [01:06<?, ?it/s, loss=49.9, lr=0.001, d_time=0.00(0.03), f_time=0.51(0.60), b_time=0.51(0.64)]epochs:   0%|          | 0/90 [01:06<?, ?it/s, loss=49.9, lr=0.001, d_time=0.00(0.03), f_time=0.51(0.60), b_time=0.51(0.64)]
-train:   8%|▊         | 103/1285 [01:06<11:40,  1.69it/s, total_it=102][A
-train:   8%|▊         | 103/1285 [01:06<11:40,  1.69it/s, total_it=103][Aepochs:   0%|          | 0/90 [01:06<?, ?it/s, loss=52.8, lr=0.001, d_time=0.02(0.03), f_time=0.59(0.60), b_time=0.61(0.64)]epochs:   0%|          | 0/90 [01:06<?, ?it/s, loss=52.8, lr=0.001, d_time=0.02(0.03), f_time=0.59(0.60), b_time=0.61(0.64)]
-train:   8%|▊         | 104/1285 [01:06<11:29,  1.71it/s, total_it=103][A
-train:   8%|▊         | 104/1285 [01:06<11:29,  1.71it/s, total_it=104][Aepochs:   0%|          | 0/90 [01:07<?, ?it/s, loss=51.7, lr=0.001, d_time=0.01(0.03), f_time=0.54(0.60), b_time=0.55(0.64)]epochs:   0%|          | 0/90 [01:07<?, ?it/s, loss=51.7, lr=0.001, d_time=0.01(0.03), f_time=0.54(0.60), b_time=0.55(0.64)]
-train:   8%|▊         | 105/1285 [01:07<10:54,  1.80it/s, total_it=104][A
-train:   8%|▊         | 105/1285 [01:07<10:54,  1.80it/s, total_it=105][Aepochs:   0%|          | 0/90 [01:07<?, ?it/s, loss=55.9, lr=0.001, d_time=0.00(0.03), f_time=0.48(0.60), b_time=0.48(0.63)]epochs:   0%|          | 0/90 [01:07<?, ?it/s, loss=55.9, lr=0.001, d_time=0.00(0.03), f_time=0.48(0.60), b_time=0.48(0.63)]
-train:   8%|▊         | 106/1285 [01:07<10:50,  1.81it/s, total_it=105][A
-train:   8%|▊         | 106/1285 [01:07<10:50,  1.81it/s, total_it=106][Aepochs:   0%|          | 0/90 [01:08<?, ?it/s, loss=51, lr=0.001, d_time=0.00(0.03), f_time=0.53(0.60), b_time=0.54(0.63)]  epochs:   0%|          | 0/90 [01:08<?, ?it/s, loss=51, lr=0.001, d_time=0.00(0.03), f_time=0.53(0.60), b_time=0.54(0.63)]
-train:   8%|▊         | 107/1285 [01:08<11:47,  1.67it/s, total_it=106][A
-train:   8%|▊         | 107/1285 [01:08<11:47,  1.67it/s, total_it=107][Aepochs:   0%|          | 0/90 [01:09<?, ?it/s, loss=47.1, lr=0.001, d_time=0.01(0.03), f_time=0.70(0.60), b_time=0.71(0.63)]epochs:   0%|          | 0/90 [01:09<?, ?it/s, loss=47.1, lr=0.001, d_time=0.01(0.03), f_time=0.70(0.60), b_time=0.71(0.63)]
-train:   8%|▊         | 108/1285 [01:08<11:27,  1.71it/s, total_it=107][A
-train:   8%|▊         | 108/1285 [01:08<11:27,  1.71it/s, total_it=108][Aepochs:   0%|          | 0/90 [01:09<?, ?it/s, loss=56.5, lr=0.001, d_time=0.01(0.03), f_time=0.52(0.60), b_time=0.54(0.63)]epochs:   0%|          | 0/90 [01:09<?, ?it/s, loss=56.5, lr=0.001, d_time=0.01(0.03), f_time=0.52(0.60), b_time=0.54(0.63)]
-train:   8%|▊         | 109/1285 [01:09<11:02,  1.78it/s, total_it=108][A
-train:   8%|▊         | 109/1285 [01:09<11:02,  1.78it/s, total_it=109][Aepochs:   0%|          | 0/90 [01:10<?, ?it/s, loss=64.5, lr=0.001, d_time=0.00(0.03), f_time=0.50(0.60), b_time=0.51(0.63)]epochs:   0%|          | 0/90 [01:10<?, ?it/s, loss=64.5, lr=0.001, d_time=0.00(0.03), f_time=0.50(0.60), b_time=0.51(0.63)]
-train:   9%|▊         | 110/1285 [01:10<11:15,  1.74it/s, total_it=109][A
-train:   9%|▊         | 110/1285 [01:10<11:15,  1.74it/s, total_it=110][Aepochs:   0%|          | 0/90 [01:10<?, ?it/s, loss=50.3, lr=0.001, d_time=0.00(0.03), f_time=0.59(0.60), b_time=0.59(0.63)]epochs:   0%|          | 0/90 [01:10<?, ?it/s, loss=50.3, lr=0.001, d_time=0.00(0.03), f_time=0.59(0.60), b_time=0.59(0.63)]
-train:   9%|▊         | 111/1285 [01:10<11:34,  1.69it/s, total_it=110][A
-train:   9%|▊         | 111/1285 [01:10<11:34,  1.69it/s, total_it=111][Aepochs:   0%|          | 0/90 [01:11<?, ?it/s, loss=49.8, lr=0.001, d_time=0.00(0.03), f_time=0.62(0.60), b_time=0.63(0.63)]epochs:   0%|          | 0/90 [01:11<?, ?it/s, loss=49.8, lr=0.001, d_time=0.00(0.03), f_time=0.62(0.60), b_time=0.63(0.63)]
-train:   9%|▊         | 112/1285 [01:11<12:05,  1.62it/s, total_it=111][A
-train:   9%|▊         | 112/1285 [01:11<12:05,  1.62it/s, total_it=112][Aepochs:   0%|          | 0/90 [01:12<?, ?it/s, loss=58.4, lr=0.001, d_time=0.00(0.03), f_time=0.67(0.60), b_time=0.68(0.63)]epochs:   0%|          | 0/90 [01:12<?, ?it/s, loss=58.4, lr=0.001, d_time=0.00(0.03), f_time=0.67(0.60), b_time=0.68(0.63)]
-train:   9%|▉         | 113/1285 [01:11<11:42,  1.67it/s, total_it=112][A
-train:   9%|▉         | 113/1285 [01:11<11:42,  1.67it/s, total_it=113][Aepochs:   0%|          | 0/90 [01:12<?, ?it/s, loss=52.6, lr=0.001, d_time=0.00(0.03), f_time=0.54(0.60), b_time=0.55(0.63)]epochs:   0%|          | 0/90 [01:12<?, ?it/s, loss=52.6, lr=0.001, d_time=0.00(0.03), f_time=0.54(0.60), b_time=0.55(0.63)]
-train:   9%|▉         | 114/1285 [01:12<11:23,  1.71it/s, total_it=113][A
-train:   9%|▉         | 114/1285 [01:12<11:23,  1.71it/s, total_it=114][Aepochs:   0%|          | 0/90 [01:13<?, ?it/s, loss=55.1, lr=0.001, d_time=0.01(0.03), f_time=0.53(0.60), b_time=0.54(0.63)]epochs:   0%|          | 0/90 [01:13<?, ?it/s, loss=55.1, lr=0.001, d_time=0.01(0.03), f_time=0.53(0.60), b_time=0.54(0.63)]
-train:   9%|▉         | 115/1285 [01:13<11:14,  1.73it/s, total_it=114][A
-train:   9%|▉         | 115/1285 [01:13<11:14,  1.73it/s, total_it=115][Aepochs:   0%|          | 0/90 [01:13<?, ?it/s, loss=57.7, lr=0.001, d_time=0.00(0.03), f_time=0.54(0.60), b_time=0.55(0.63)]epochs:   0%|          | 0/90 [01:13<?, ?it/s, loss=57.7, lr=0.001, d_time=0.00(0.03), f_time=0.54(0.60), b_time=0.55(0.63)]
-train:   9%|▉         | 116/1285 [01:13<10:50,  1.80it/s, total_it=115][A
-train:   9%|▉         | 116/1285 [01:13<10:50,  1.80it/s, total_it=116][Aepochs:   0%|          | 0/90 [01:14<?, ?it/s, loss=44.3, lr=0.001, d_time=0.00(0.03), f_time=0.50(0.60), b_time=0.50(0.63)]epochs:   0%|          | 0/90 [01:14<?, ?it/s, loss=44.3, lr=0.001, d_time=0.00(0.03), f_time=0.50(0.60), b_time=0.50(0.63)]
-train:   9%|▉         | 117/1285 [01:14<10:38,  1.83it/s, total_it=116][A
-train:   9%|▉         | 117/1285 [01:14<10:38,  1.83it/s, total_it=117][Aepochs:   0%|          | 0/90 [01:14<?, ?it/s, loss=63.9, lr=0.001, d_time=0.00(0.03), f_time=0.50(0.60), b_time=0.52(0.63)]epochs:   0%|          | 0/90 [01:14<?, ?it/s, loss=63.9, lr=0.001, d_time=0.00(0.03), f_time=0.50(0.60), b_time=0.52(0.63)]
-train:   9%|▉         | 118/1285 [01:14<10:12,  1.91it/s, total_it=117][A
-train:   9%|▉         | 118/1285 [01:14<10:12,  1.91it/s, total_it=118][Aepochs:   0%|          | 0/90 [01:15<?, ?it/s, loss=52.5, lr=0.001, d_time=0.00(0.03), f_time=0.45(0.59), b_time=0.46(0.63)]epochs:   0%|          | 0/90 [01:15<?, ?it/s, loss=52.5, lr=0.001, d_time=0.00(0.03), f_time=0.45(0.59), b_time=0.46(0.63)]
-train:   9%|▉         | 119/1285 [01:15<10:54,  1.78it/s, total_it=118][A
-train:   9%|▉         | 119/1285 [01:15<10:54,  1.78it/s, total_it=119][Aepochs:   0%|          | 0/90 [01:15<?, ?it/s, loss=53.7, lr=0.001, d_time=0.00(0.03), f_time=0.62(0.59), b_time=0.64(0.63)]epochs:   0%|          | 0/90 [01:15<?, ?it/s, loss=53.7, lr=0.001, d_time=0.00(0.03), f_time=0.62(0.59), b_time=0.64(0.63)]
-train:   9%|▉         | 120/1285 [01:15<10:43,  1.81it/s, total_it=119][A
-train:   9%|▉         | 120/1285 [01:15<10:43,  1.81it/s, total_it=120][Aepochs:   0%|          | 0/90 [01:16<?, ?it/s, loss=56.5, lr=0.001, d_time=0.00(0.03), f_time=0.52(0.59), b_time=0.53(0.63)]epochs:   0%|          | 0/90 [01:16<?, ?it/s, loss=56.5, lr=0.001, d_time=0.00(0.03), f_time=0.52(0.59), b_time=0.53(0.63)]
-train:   9%|▉         | 121/1285 [01:16<10:54,  1.78it/s, total_it=120][A
-train:   9%|▉         | 121/1285 [01:16<10:54,  1.78it/s, total_it=121][Aepochs:   0%|          | 0/90 [01:17<?, ?it/s, loss=52.3, lr=0.001, d_time=0.01(0.03), f_time=0.57(0.59), b_time=0.58(0.63)]epochs:   0%|          | 0/90 [01:17<?, ?it/s, loss=52.3, lr=0.001, d_time=0.01(0.03), f_time=0.57(0.59), b_time=0.58(0.63)]
-train:   9%|▉         | 122/1285 [01:16<11:03,  1.75it/s, total_it=121][A
-train:   9%|▉         | 122/1285 [01:16<11:03,  1.75it/s, total_it=122][Aepochs:   0%|          | 0/90 [01:17<?, ?it/s, loss=55, lr=0.001, d_time=0.00(0.03), f_time=0.57(0.59), b_time=0.58(0.63)]  epochs:   0%|          | 0/90 [01:17<?, ?it/s, loss=55, lr=0.001, d_time=0.00(0.03), f_time=0.57(0.59), b_time=0.58(0.63)]
-train:  10%|▉         | 123/1285 [01:17<12:08,  1.60it/s, total_it=122][A
-train:  10%|▉         | 123/1285 [01:17<12:08,  1.60it/s, total_it=123][Aepochs:   0%|          | 0/90 [01:18<?, ?it/s, loss=54.6, lr=0.001, d_time=0.01(0.03), f_time=0.71(0.59), b_time=0.72(0.63)]epochs:   0%|          | 0/90 [01:18<?, ?it/s, loss=54.6, lr=0.001, d_time=0.01(0.03), f_time=0.71(0.59), b_time=0.72(0.63)]
-train:  10%|▉         | 124/1285 [01:18<11:50,  1.64it/s, total_it=123][A
-train:  10%|▉         | 124/1285 [01:18<11:50,  1.64it/s, total_it=124][Aepochs:   0%|          | 0/90 [01:19<?, ?it/s, loss=52.3, lr=0.001, d_time=0.00(0.03), f_time=0.56(0.59), b_time=0.57(0.63)]epochs:   0%|          | 0/90 [01:19<?, ?it/s, loss=52.3, lr=0.001, d_time=0.00(0.03), f_time=0.56(0.59), b_time=0.57(0.63)]
-train:  10%|▉         | 125/1285 [01:18<11:25,  1.69it/s, total_it=124][A
-train:  10%|▉         | 125/1285 [01:18<11:25,  1.69it/s, total_it=125][Aepochs:   0%|          | 0/90 [01:19<?, ?it/s, loss=51.3, lr=0.001, d_time=0.00(0.03), f_time=0.53(0.59), b_time=0.54(0.62)]epochs:   0%|          | 0/90 [01:19<?, ?it/s, loss=51.3, lr=0.001, d_time=0.00(0.03), f_time=0.53(0.59), b_time=0.54(0.62)]
-train:  10%|▉         | 126/1285 [01:19<11:39,  1.66it/s, total_it=125][A
-train:  10%|▉         | 126/1285 [01:19<11:39,  1.66it/s, total_it=126][Aepochs:   0%|          | 0/90 [01:20<?, ?it/s, loss=52.2, lr=0.001, d_time=0.01(0.03), f_time=0.61(0.59), b_time=0.63(0.62)]epochs:   0%|          | 0/90 [01:20<?, ?it/s, loss=52.2, lr=0.001, d_time=0.01(0.03), f_time=0.61(0.59), b_time=0.63(0.62)]
-train:  10%|▉         | 127/1285 [01:19<11:27,  1.68it/s, total_it=126][A
-train:  10%|▉         | 127/1285 [01:19<11:27,  1.68it/s, total_it=127][Aepochs:   0%|          | 0/90 [01:20<?, ?it/s, loss=48.6, lr=0.001, d_time=0.00(0.03), f_time=0.56(0.59), b_time=0.57(0.62)]epochs:   0%|          | 0/90 [01:20<?, ?it/s, loss=48.6, lr=0.001, d_time=0.00(0.03), f_time=0.56(0.59), b_time=0.57(0.62)]
-train:  10%|▉         | 128/1285 [01:20<11:58,  1.61it/s, total_it=127][A
-train:  10%|▉         | 128/1285 [01:20<11:58,  1.61it/s, total_it=128][Aepochs:   0%|          | 0/90 [01:21<?, ?it/s, loss=52.2, lr=0.001, d_time=0.00(0.03), f_time=0.67(0.59), b_time=0.68(0.62)]epochs:   0%|          | 0/90 [01:21<?, ?it/s, loss=52.2, lr=0.001, d_time=0.00(0.03), f_time=0.67(0.59), b_time=0.68(0.62)]
-train:  10%|█         | 129/1285 [01:21<11:32,  1.67it/s, total_it=128][A
-train:  10%|█         | 129/1285 [01:21<11:32,  1.67it/s, total_it=129][Aepochs:   0%|          | 0/90 [01:22<?, ?it/s, loss=53.1, lr=0.001, d_time=0.01(0.03), f_time=0.53(0.59), b_time=0.54(0.62)]epochs:   0%|          | 0/90 [01:22<?, ?it/s, loss=53.1, lr=0.001, d_time=0.01(0.03), f_time=0.53(0.59), b_time=0.54(0.62)]
-train:  10%|█         | 130/1285 [01:21<11:29,  1.67it/s, total_it=129][A
-train:  10%|█         | 130/1285 [01:21<11:29,  1.67it/s, total_it=130][Aepochs:   0%|          | 0/90 [01:22<?, ?it/s, loss=49.3, lr=0.001, d_time=0.00(0.02), f_time=0.58(0.59), b_time=0.59(0.62)]epochs:   0%|          | 0/90 [01:22<?, ?it/s, loss=49.3, lr=0.001, d_time=0.00(0.02), f_time=0.58(0.59), b_time=0.59(0.62)]
-train:  10%|█         | 131/1285 [01:22<12:12,  1.58it/s, total_it=130][A
-train:  10%|█         | 131/1285 [01:22<12:12,  1.58it/s, total_it=131][Aepochs:   0%|          | 0/90 [01:23<?, ?it/s, loss=51.6, lr=0.001, d_time=0.01(0.02), f_time=0.70(0.59), b_time=0.72(0.62)]epochs:   0%|          | 0/90 [01:23<?, ?it/s, loss=51.6, lr=0.001, d_time=0.01(0.02), f_time=0.70(0.59), b_time=0.72(0.62)]
-train:  10%|█         | 132/1285 [01:23<11:39,  1.65it/s, total_it=131][A
-train:  10%|█         | 132/1285 [01:23<11:39,  1.65it/s, total_it=132][Aepochs:   0%|          | 0/90 [01:23<?, ?it/s, loss=58.8, lr=0.001, d_time=0.01(0.02), f_time=0.53(0.59), b_time=0.54(0.62)]epochs:   0%|          | 0/90 [01:23<?, ?it/s, loss=58.8, lr=0.001, d_time=0.01(0.02), f_time=0.53(0.59), b_time=0.54(0.62)]
-train:  10%|█         | 133/1285 [01:23<11:23,  1.69it/s, total_it=132][A
-train:  10%|█         | 133/1285 [01:23<11:23,  1.69it/s, total_it=133][Aepochs:   0%|          | 0/90 [01:24<?, ?it/s, loss=49.6, lr=0.001, d_time=0.00(0.02), f_time=0.55(0.59), b_time=0.56(0.62)]epochs:   0%|          | 0/90 [01:24<?, ?it/s, loss=49.6, lr=0.001, d_time=0.00(0.02), f_time=0.55(0.59), b_time=0.56(0.62)]
-train:  10%|█         | 134/1285 [01:24<11:07,  1.72it/s, total_it=133][A
-train:  10%|█         | 134/1285 [01:24<11:07,  1.72it/s, total_it=134][Aepochs:   0%|          | 0/90 [01:24<?, ?it/s, loss=54.1, lr=0.001, d_time=0.01(0.02), f_time=0.53(0.59), b_time=0.55(0.62)]epochs:   0%|          | 0/90 [01:24<?, ?it/s, loss=54.1, lr=0.001, d_time=0.01(0.02), f_time=0.53(0.59), b_time=0.55(0.62)]
-train:  11%|█         | 135/1285 [01:24<11:45,  1.63it/s, total_it=134][A
-train:  11%|█         | 135/1285 [01:24<11:45,  1.63it/s, total_it=135][Aepochs:   0%|          | 0/90 [01:25<?, ?it/s, loss=57.2, lr=0.001, d_time=0.01(0.02), f_time=0.67(0.59), b_time=0.68(0.62)]epochs:   0%|          | 0/90 [01:25<?, ?it/s, loss=57.2, lr=0.001, d_time=0.01(0.02), f_time=0.67(0.59), b_time=0.68(0.62)]
-train:  11%|█         | 136/1285 [01:25<11:15,  1.70it/s, total_it=135][A
-train:  11%|█         | 136/1285 [01:25<11:15,  1.70it/s, total_it=136][Aepochs:   0%|          | 0/90 [01:26<?, ?it/s, loss=49.1, lr=0.001, d_time=0.00(0.02), f_time=0.52(0.59), b_time=0.53(0.62)]epochs:   0%|          | 0/90 [01:26<?, ?it/s, loss=49.1, lr=0.001, d_time=0.00(0.02), f_time=0.52(0.59), b_time=0.53(0.62)]
-train:  11%|█         | 137/1285 [01:26<11:19,  1.69it/s, total_it=136][A
-train:  11%|█         | 137/1285 [01:26<11:19,  1.69it/s, total_it=137][Aepochs:   0%|          | 0/90 [01:26<?, ?it/s, loss=60.8, lr=0.001, d_time=0.00(0.02), f_time=0.58(0.59), b_time=0.59(0.62)]epochs:   0%|          | 0/90 [01:26<?, ?it/s, loss=60.8, lr=0.001, d_time=0.00(0.02), f_time=0.58(0.59), b_time=0.59(0.62)]
-train:  11%|█         | 138/1285 [01:26<10:31,  1.82it/s, total_it=137][A
-train:  11%|█         | 138/1285 [01:26<10:31,  1.82it/s, total_it=138][Aepochs:   0%|          | 0/90 [01:27<?, ?it/s, loss=58.7, lr=0.001, d_time=0.01(0.02), f_time=0.42(0.59), b_time=0.45(0.62)]epochs:   0%|          | 0/90 [01:27<?, ?it/s, loss=58.7, lr=0.001, d_time=0.01(0.02), f_time=0.42(0.59), b_time=0.45(0.62)]
-train:  11%|█         | 139/1285 [01:27<11:38,  1.64it/s, total_it=138][A
-train:  11%|█         | 139/1285 [01:27<11:38,  1.64it/s, total_it=139][Aepochs:   0%|          | 0/90 [01:27<?, ?it/s, loss=54, lr=0.001, d_time=0.01(0.02), f_time=0.71(0.59), b_time=0.73(0.62)]  epochs:   0%|          | 0/90 [01:27<?, ?it/s, loss=54, lr=0.001, d_time=0.01(0.02), f_time=0.71(0.59), b_time=0.73(0.62)]
-train:  11%|█         | 140/1285 [01:27<11:18,  1.69it/s, total_it=139][A
-train:  11%|█         | 140/1285 [01:27<11:18,  1.69it/s, total_it=140][Aepochs:   0%|          | 0/90 [01:28<?, ?it/s, loss=57.5, lr=0.001, d_time=0.01(0.02), f_time=0.53(0.59), b_time=0.54(0.62)]epochs:   0%|          | 0/90 [01:28<?, ?it/s, loss=57.5, lr=0.001, d_time=0.01(0.02), f_time=0.53(0.59), b_time=0.54(0.62)]
-*****Mean_vfe
-hm_loss:3.780036211013794 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.2801623344421387 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.2842931747436523 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.796353578567505 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.68503999710083 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.3890647888183594 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.2634832859039307 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.5674195289611816 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.5576913356781006 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.49676251411438 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.349760055541992 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:2.687058925628662 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.748047351837158 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.215587615966797 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.8929500579833984 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.4809601306915283 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.1590702533721924 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.4669809341430664 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.007202625274658 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.5001626014709473 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.176184892654419 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.495746612548828 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.406846761703491 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.6294140815734863 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.478764295578003 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.752530574798584 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.7776384353637695 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.574383020401001 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.2198822498321533 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.4182164669036865 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.5290865898132324 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.3070201873779297 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.5016579627990723 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:4.101803779602051 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.347628593444824 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.5694355964660645 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.4191644191741943 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.5449740886688232 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.589372158050537 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.645867109298706 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.51448655128479 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.4083619117736816 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.9493355751037598 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.561668634414673 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.5197649002075195 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.0779662132263184 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.219285488128662 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.398176431655884 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:2.9697394371032715 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.4184703826904297 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.267810583114624 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.263866662979126 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.6990835666656494 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.704143524169922 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.385540246963501 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.415151834487915 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.4708690643310547 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.093552350997925 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.4338788986206055 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.355916738510132 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.6897003650665283 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.127234935760498 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.5918307304382324 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.5363621711730957 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.531094551086426 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.7678985595703125 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.6148526668548584 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.8008549213409424 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.6227941513061523 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.3609726428985596 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.7125134468078613 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:2.8919992446899414 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.4832451343536377 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.516049385070801 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.1327569484710693 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.6018338203430176 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.4388856887817383 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.6507534980773926 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.5905590057373047 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.5436158180236816 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.279310464859009 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.32039475440979 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.427733898162842 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.2190170288085938 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.108250856399536 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.6131319999694824 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.281467914581299 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.545038938522339 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.555649518966675 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.512286901473999 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.599841594696045 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.443171739578247 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.274359703063965 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.837435245513916 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.600160598754883 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.0795786380767822 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.6852593421936035 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.089977502822876 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.637324571609497 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.369321584701538 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.7756803035736084 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:2.991593837738037 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.348836898803711 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.3824539184570312 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.879897356033325 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.3576395511627197 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.2121012210845947 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.598376750946045 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.600883722305298 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.4487974643707275 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.24288272857666 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.4234113693237305 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.3295469284057617 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.3641419410705566 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.6342408657073975 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:2.9578781127929688 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.4604597091674805 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.524599313735962 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.5468525886535645 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.7005038261413574 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.238159418106079 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.567957878112793 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.1726183891296387 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.2551958560943604 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.3815481662750244 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.350339889526367 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.2112045288085938 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.126647710800171 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.48225736618042 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.2082085609436035 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.26841139793396 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.6317288875579834 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:2.484724998474121 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.1397595405578613 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.226142168045044 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:2.9947643280029297 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.4762861728668213 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.7545385360717773 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.253450393676758 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.8263792991638184 = 20*hm_loss_N/2
-
-train:  11%|█         | 141/1285 [01:28<11:11,  1.70it/s, total_it=140][A
-train:  11%|█         | 141/1285 [01:28<11:11,  1.70it/s, total_it=141][Aepochs:   0%|          | 0/90 [01:29<?, ?it/s, loss=48.9, lr=0.001, d_time=0.01(0.02), f_time=0.56(0.59), b_time=0.57(0.62)]epochs:   0%|          | 0/90 [01:29<?, ?it/s, loss=48.9, lr=0.001, d_time=0.01(0.02), f_time=0.56(0.59), b_time=0.57(0.62)]
-train:  11%|█         | 142/1285 [01:28<11:14,  1.69it/s, total_it=141][A
-train:  11%|█         | 142/1285 [01:28<11:14,  1.69it/s, total_it=142][Aepochs:   0%|          | 0/90 [01:29<?, ?it/s, loss=58.6, lr=0.001, d_time=0.00(0.02), f_time=0.59(0.59), b_time=0.60(0.62)]epochs:   0%|          | 0/90 [01:29<?, ?it/s, loss=58.6, lr=0.001, d_time=0.00(0.02), f_time=0.59(0.59), b_time=0.60(0.62)]
-train:  11%|█         | 143/1285 [01:29<11:02,  1.72it/s, total_it=142][A
-train:  11%|█         | 143/1285 [01:29<11:02,  1.72it/s, total_it=143][Aepochs:   0%|          | 0/90 [01:30<?, ?it/s, loss=68.9, lr=0.001, d_time=0.01(0.02), f_time=0.54(0.59), b_time=0.55(0.62)]epochs:   0%|          | 0/90 [01:30<?, ?it/s, loss=68.9, lr=0.001, d_time=0.01(0.02), f_time=0.54(0.59), b_time=0.55(0.62)]
-train:  11%|█         | 144/1285 [01:30<11:25,  1.66it/s, total_it=143][A
-train:  11%|█         | 144/1285 [01:30<11:25,  1.66it/s, total_it=144][Aepochs:   0%|          | 0/90 [01:30<?, ?it/s, loss=53.7, lr=0.001, d_time=0.01(0.02), f_time=0.63(0.59), b_time=0.65(0.62)]epochs:   0%|          | 0/90 [01:30<?, ?it/s, loss=53.7, lr=0.001, d_time=0.01(0.02), f_time=0.63(0.59), b_time=0.65(0.62)]
-train:  11%|█▏        | 145/1285 [01:30<11:29,  1.65it/s, total_it=144][A
-train:  11%|█▏        | 145/1285 [01:30<11:29,  1.65it/s, total_it=145][Aepochs:   0%|          | 0/90 [01:31<?, ?it/s, loss=49.3, lr=0.001, d_time=0.01(0.02), f_time=0.60(0.59), b_time=0.61(0.62)]epochs:   0%|          | 0/90 [01:31<?, ?it/s, loss=49.3, lr=0.001, d_time=0.01(0.02), f_time=0.60(0.59), b_time=0.61(0.62)]
-train:  11%|█▏        | 146/1285 [01:31<11:48,  1.61it/s, total_it=145][A
-train:  11%|█▏        | 146/1285 [01:31<11:48,  1.61it/s, total_it=146][Aepochs:   0%|          | 0/90 [01:32<?, ?it/s, loss=56.4, lr=0.001, d_time=0.01(0.02), f_time=0.65(0.59), b_time=0.66(0.62)]epochs:   0%|          | 0/90 [01:32<?, ?it/s, loss=56.4, lr=0.001, d_time=0.01(0.02), f_time=0.65(0.59), b_time=0.66(0.62)]
-train:  11%|█▏        | 147/1285 [01:31<11:26,  1.66it/s, total_it=146][A
-train:  11%|█▏        | 147/1285 [01:31<11:26,  1.66it/s, total_it=147][Aepochs:   0%|          | 0/90 [01:32<?, ?it/s, loss=58.2, lr=0.001, d_time=0.00(0.02), f_time=0.51(0.59), b_time=0.54(0.62)]epochs:   0%|          | 0/90 [01:32<?, ?it/s, loss=58.2, lr=0.001, d_time=0.00(0.02), f_time=0.51(0.59), b_time=0.54(0.62)]
-train:  12%|█▏        | 148/1285 [01:32<11:31,  1.64it/s, total_it=147][A
-train:  12%|█▏        | 148/1285 [01:32<11:31,  1.64it/s, total_it=148][Aepochs:   0%|          | 0/90 [01:33<?, ?it/s, loss=47.4, lr=0.001, d_time=0.01(0.02), f_time=0.59(0.59), b_time=0.60(0.62)]epochs:   0%|          | 0/90 [01:33<?, ?it/s, loss=47.4, lr=0.001, d_time=0.01(0.02), f_time=0.59(0.59), b_time=0.60(0.62)]
-train:  12%|█▏        | 149/1285 [01:33<11:54,  1.59it/s, total_it=148][A
-train:  12%|█▏        | 149/1285 [01:33<11:54,  1.59it/s, total_it=149][Aepochs:   0%|          | 0/90 [01:34<?, ?it/s, loss=58.3, lr=0.001, d_time=0.01(0.02), f_time=0.64(0.59), b_time=0.66(0.62)]epochs:   0%|          | 0/90 [01:34<?, ?it/s, loss=58.3, lr=0.001, d_time=0.01(0.02), f_time=0.64(0.59), b_time=0.66(0.62)]
-train:  12%|█▏        | 150/1285 [01:33<11:33,  1.64it/s, total_it=149][A
-train:  12%|█▏        | 150/1285 [01:33<11:33,  1.64it/s, total_it=150][Aepochs:   0%|          | 0/90 [01:34<?, ?it/s, loss=49.2, lr=0.001, d_time=0.00(0.02), f_time=0.55(0.59), b_time=0.57(0.62)]epochs:   0%|          | 0/90 [01:34<?, ?it/s, loss=49.2, lr=0.001, d_time=0.00(0.02), f_time=0.55(0.59), b_time=0.57(0.62)]
-train:  12%|█▏        | 151/1285 [01:34<11:10,  1.69it/s, total_it=150][A
-train:  12%|█▏        | 151/1285 [01:34<11:10,  1.69it/s, total_it=151][Aepochs:   0%|          | 0/90 [01:35<?, ?it/s, loss=54.3, lr=0.001, d_time=0.00(0.02), f_time=0.52(0.59), b_time=0.53(0.62)]epochs:   0%|          | 0/90 [01:35<?, ?it/s, loss=54.3, lr=0.001, d_time=0.00(0.02), f_time=0.52(0.59), b_time=0.53(0.62)]
-train:  12%|█▏        | 152/1285 [01:35<11:22,  1.66it/s, total_it=151][A
-train:  12%|█▏        | 152/1285 [01:35<11:22,  1.66it/s, total_it=152][Aepochs:   0%|          | 0/90 [01:35<?, ?it/s, loss=56.9, lr=0.001, d_time=0.00(0.02), f_time=0.62(0.59), b_time=0.63(0.62)]epochs:   0%|          | 0/90 [01:35<?, ?it/s, loss=56.9, lr=0.001, d_time=0.00(0.02), f_time=0.62(0.59), b_time=0.63(0.62)]
-train:  12%|█▏        | 153/1285 [01:35<10:23,  1.82it/s, total_it=152][A
-train:  12%|█▏        | 153/1285 [01:35<10:23,  1.82it/s, total_it=153][Aepochs:   0%|          | 0/90 [01:36<?, ?it/s, loss=53.4, lr=0.001, d_time=0.00(0.02), f_time=0.42(0.59), b_time=0.43(0.62)]epochs:   0%|          | 0/90 [01:36<?, ?it/s, loss=53.4, lr=0.001, d_time=0.00(0.02), f_time=0.42(0.59), b_time=0.43(0.62)]
-train:  12%|█▏        | 154/1285 [01:36<10:24,  1.81it/s, total_it=153][A
-train:  12%|█▏        | 154/1285 [01:36<10:24,  1.81it/s, total_it=154][Aepochs:   0%|          | 0/90 [01:36<?, ?it/s, loss=50, lr=0.001, d_time=0.00(0.02), f_time=0.54(0.59), b_time=0.55(0.62)]  epochs:   0%|          | 0/90 [01:36<?, ?it/s, loss=50, lr=0.001, d_time=0.00(0.02), f_time=0.54(0.59), b_time=0.55(0.62)]
-train:  12%|█▏        | 155/1285 [01:36<10:59,  1.71it/s, total_it=154][A
-train:  12%|█▏        | 155/1285 [01:36<10:59,  1.71it/s, total_it=155][Aepochs:   0%|          | 0/90 [01:37<?, ?it/s, loss=54.2, lr=0.001, d_time=0.01(0.02), f_time=0.64(0.59), b_time=0.65(0.62)]epochs:   0%|          | 0/90 [01:37<?, ?it/s, loss=54.2, lr=0.001, d_time=0.01(0.02), f_time=0.64(0.59), b_time=0.65(0.62)]
-train:  12%|█▏        | 156/1285 [01:37<11:19,  1.66it/s, total_it=155][A
-train:  12%|█▏        | 156/1285 [01:37<11:19,  1.66it/s, total_it=156][Aepochs:   0%|          | 0/90 [01:38<?, ?it/s, loss=52.4, lr=0.001, d_time=0.00(0.02), f_time=0.63(0.59), b_time=0.64(0.62)]epochs:   0%|          | 0/90 [01:38<?, ?it/s, loss=52.4, lr=0.001, d_time=0.00(0.02), f_time=0.63(0.59), b_time=0.64(0.62)]
-train:  12%|█▏        | 157/1285 [01:37<11:02,  1.70it/s, total_it=156][A
-train:  12%|█▏        | 157/1285 [01:37<11:02,  1.70it/s, total_it=157][Aepochs:   0%|          | 0/90 [01:38<?, ?it/s, loss=50.3, lr=0.001, d_time=0.01(0.02), f_time=0.53(0.59), b_time=0.54(0.62)]epochs:   0%|          | 0/90 [01:38<?, ?it/s, loss=50.3, lr=0.001, d_time=0.01(0.02), f_time=0.53(0.59), b_time=0.54(0.62)]
-train:  12%|█▏        | 158/1285 [01:38<11:04,  1.70it/s, total_it=157][A
-train:  12%|█▏        | 158/1285 [01:38<11:04,  1.70it/s, total_it=158][Aepochs:   0%|          | 0/90 [01:39<?, ?it/s, loss=54.3, lr=0.001, d_time=0.01(0.02), f_time=0.58(0.59), b_time=0.59(0.62)]epochs:   0%|          | 0/90 [01:39<?, ?it/s, loss=54.3, lr=0.001, d_time=0.01(0.02), f_time=0.58(0.59), b_time=0.59(0.62)]
-train:  12%|█▏        | 159/1285 [01:39<11:01,  1.70it/s, total_it=158][A
-train:  12%|█▏        | 159/1285 [01:39<11:01,  1.70it/s, total_it=159][Aepochs:   0%|          | 0/90 [01:39<?, ?it/s, loss=56.9, lr=0.001, d_time=0.00(0.02), f_time=0.57(0.59), b_time=0.58(0.62)]epochs:   0%|          | 0/90 [01:39<?, ?it/s, loss=56.9, lr=0.001, d_time=0.00(0.02), f_time=0.57(0.59), b_time=0.58(0.62)]
-train:  12%|█▏        | 160/1285 [01:39<10:49,  1.73it/s, total_it=159][A
-train:  12%|█▏        | 160/1285 [01:39<10:49,  1.73it/s, total_it=160][Aepochs:   0%|          | 0/90 [01:40<?, ?it/s, loss=51.6, lr=0.001, d_time=0.01(0.02), f_time=0.54(0.59), b_time=0.55(0.62)]epochs:   0%|          | 0/90 [01:40<?, ?it/s, loss=51.6, lr=0.001, d_time=0.01(0.02), f_time=0.54(0.59), b_time=0.55(0.62)]
-train:  13%|█▎        | 161/1285 [01:40<10:31,  1.78it/s, total_it=160][A
-train:  13%|█▎        | 161/1285 [01:40<10:31,  1.78it/s, total_it=161][Aepochs:   0%|          | 0/90 [01:40<?, ?it/s, loss=54.6, lr=0.001, d_time=0.01(0.02), f_time=0.49(0.59), b_time=0.51(0.62)]epochs:   0%|          | 0/90 [01:40<?, ?it/s, loss=54.6, lr=0.001, d_time=0.01(0.02), f_time=0.49(0.59), b_time=0.51(0.62)]
-train:  13%|█▎        | 162/1285 [01:40<10:07,  1.85it/s, total_it=161][A
-train:  13%|█▎        | 162/1285 [01:40<10:07,  1.85it/s, total_it=162][Aepochs:   0%|          | 0/90 [01:41<?, ?it/s, loss=52.8, lr=0.001, d_time=0.01(0.02), f_time=0.46(0.59), b_time=0.48(0.62)]epochs:   0%|          | 0/90 [01:41<?, ?it/s, loss=52.8, lr=0.001, d_time=0.01(0.02), f_time=0.46(0.59), b_time=0.48(0.62)]
-train:  13%|█▎        | 163/1285 [01:41<09:51,  1.90it/s, total_it=162][A
-train:  13%|█▎        | 163/1285 [01:41<09:51,  1.90it/s, total_it=163][Aepochs:   0%|          | 0/90 [01:41<?, ?it/s, loss=45.8, lr=0.001, d_time=0.01(0.02), f_time=0.47(0.59), b_time=0.49(0.61)]epochs:   0%|          | 0/90 [01:41<?, ?it/s, loss=45.8, lr=0.001, d_time=0.01(0.02), f_time=0.47(0.59), b_time=0.49(0.61)]
-train:  13%|█▎        | 164/1285 [01:41<09:56,  1.88it/s, total_it=163][A
-train:  13%|█▎        | 164/1285 [01:41<09:56,  1.88it/s, total_it=164][Aepochs:   0%|          | 0/90 [01:42<?, ?it/s, loss=53.9, lr=0.001, d_time=0.01(0.02), f_time=0.50(0.59), b_time=0.51(0.61)]epochs:   0%|          | 0/90 [01:42<?, ?it/s, loss=53.9, lr=0.001, d_time=0.01(0.02), f_time=0.50(0.59), b_time=0.51(0.61)]
-train:  13%|█▎        | 165/1285 [01:42<09:51,  1.89it/s, total_it=164][A
-train:  13%|█▎        | 165/1285 [01:42<09:51,  1.89it/s, total_it=165][Aepochs:   0%|          | 0/90 [01:42<?, ?it/s, loss=60.8, lr=0.001, d_time=0.00(0.02), f_time=0.51(0.59), b_time=0.51(0.61)]epochs:   0%|          | 0/90 [01:42<?, ?it/s, loss=60.8, lr=0.001, d_time=0.00(0.02), f_time=0.51(0.59), b_time=0.51(0.61)]
-train:  13%|█▎        | 166/1285 [01:42<10:04,  1.85it/s, total_it=165][A
-train:  13%|█▎        | 166/1285 [01:42<10:04,  1.85it/s, total_it=166][Aepochs:   0%|          | 0/90 [01:43<?, ?it/s, loss=53.1, lr=0.001, d_time=0.01(0.02), f_time=0.55(0.59), b_time=0.56(0.61)]epochs:   0%|          | 0/90 [01:43<?, ?it/s, loss=53.1, lr=0.001, d_time=0.01(0.02), f_time=0.55(0.59), b_time=0.56(0.61)]
-train:  13%|█▎        | 167/1285 [01:43<10:22,  1.80it/s, total_it=166][A
-train:  13%|█▎        | 167/1285 [01:43<10:22,  1.80it/s, total_it=167][Aepochs:   0%|          | 0/90 [01:44<?, ?it/s, loss=52.6, lr=0.001, d_time=0.01(0.02), f_time=0.57(0.59), b_time=0.59(0.61)]epochs:   0%|          | 0/90 [01:44<?, ?it/s, loss=52.6, lr=0.001, d_time=0.01(0.02), f_time=0.57(0.59), b_time=0.59(0.61)]
-train:  13%|█▎        | 168/1285 [01:43<10:09,  1.83it/s, total_it=167][A
-train:  13%|█▎        | 168/1285 [01:43<10:09,  1.83it/s, total_it=168][Aepochs:   0%|          | 0/90 [01:44<?, ?it/s, loss=50.7, lr=0.001, d_time=0.01(0.02), f_time=0.48(0.59), b_time=0.50(0.61)]epochs:   0%|          | 0/90 [01:44<?, ?it/s, loss=50.7, lr=0.001, d_time=0.01(0.02), f_time=0.48(0.59), b_time=0.50(0.61)]
-train:  13%|█▎        | 169/1285 [01:44<10:24,  1.79it/s, total_it=168][A
-train:  13%|█▎        | 169/1285 [01:44<10:24,  1.79it/s, total_it=169][Aepochs:   0%|          | 0/90 [01:45<?, ?it/s, loss=49.5, lr=0.001, d_time=0.00(0.02), f_time=0.57(0.59), b_time=0.59(0.61)]epochs:   0%|          | 0/90 [01:45<?, ?it/s, loss=49.5, lr=0.001, d_time=0.00(0.02), f_time=0.57(0.59), b_time=0.59(0.61)]
-train:  13%|█▎        | 170/1285 [01:45<11:13,  1.66it/s, total_it=169][A
-train:  13%|█▎        | 170/1285 [01:45<11:13,  1.66it/s, total_it=170][Aepochs:   0%|          | 0/90 [01:45<?, ?it/s, loss=55.3, lr=0.001, d_time=0.00(0.02), f_time=0.68(0.59), b_time=0.69(0.61)]epochs:   0%|          | 0/90 [01:45<?, ?it/s, loss=55.3, lr=0.001, d_time=0.00(0.02), f_time=0.68(0.59), b_time=0.69(0.61)]
-train:  13%|█▎        | 171/1285 [01:45<11:17,  1.64it/s, total_it=170][A
-train:  13%|█▎        | 171/1285 [01:45<11:17,  1.64it/s, total_it=171][Aepochs:   0%|          | 0/90 [01:46<?, ?it/s, loss=50.5, lr=0.001, d_time=0.01(0.02), f_time=0.58(0.59), b_time=0.60(0.61)]epochs:   0%|          | 0/90 [01:46<?, ?it/s, loss=50.5, lr=0.001, d_time=0.01(0.02), f_time=0.58(0.59), b_time=0.60(0.61)]
-train:  13%|█▎        | 172/1285 [01:46<11:11,  1.66it/s, total_it=171][A
-train:  13%|█▎        | 172/1285 [01:46<11:11,  1.66it/s, total_it=172][Aepochs:   0%|          | 0/90 [01:47<?, ?it/s, loss=55.4, lr=0.001, d_time=0.00(0.02), f_time=0.58(0.59), b_time=0.59(0.61)]epochs:   0%|          | 0/90 [01:47<?, ?it/s, loss=55.4, lr=0.001, d_time=0.00(0.02), f_time=0.58(0.59), b_time=0.59(0.61)]
-train:  13%|█▎        | 173/1285 [01:46<11:14,  1.65it/s, total_it=172][A
-train:  13%|█▎        | 173/1285 [01:46<11:14,  1.65it/s, total_it=173][Aepochs:   0%|          | 0/90 [01:47<?, ?it/s, loss=55, lr=0.001, d_time=0.01(0.02), f_time=0.60(0.59), b_time=0.61(0.61)]  epochs:   0%|          | 0/90 [01:47<?, ?it/s, loss=55, lr=0.001, d_time=0.01(0.02), f_time=0.60(0.59), b_time=0.61(0.61)]
-train:  14%|█▎        | 174/1285 [01:47<10:41,  1.73it/s, total_it=173][A
-train:  14%|█▎        | 174/1285 [01:47<10:41,  1.73it/s, total_it=174][Aepochs:   0%|          | 0/90 [01:48<?, ?it/s, loss=55.8, lr=0.001, d_time=0.00(0.02), f_time=0.50(0.59), b_time=0.51(0.61)]epochs:   0%|          | 0/90 [01:48<?, ?it/s, loss=55.8, lr=0.001, d_time=0.00(0.02), f_time=0.50(0.59), b_time=0.51(0.61)]
-train:  14%|█▎        | 175/1285 [01:48<11:18,  1.64it/s, total_it=174][A
-train:  14%|█▎        | 175/1285 [01:48<11:18,  1.64it/s, total_it=175][Aepochs:   0%|          | 0/90 [01:48<?, ?it/s, loss=65.2, lr=0.001, d_time=0.01(0.02), f_time=0.67(0.59), b_time=0.68(0.61)]epochs:   0%|          | 0/90 [01:48<?, ?it/s, loss=65.2, lr=0.001, d_time=0.01(0.02), f_time=0.67(0.59), b_time=0.68(0.61)]
-train:  14%|█▎        | 176/1285 [01:48<11:06,  1.66it/s, total_it=175][A
-train:  14%|█▎        | 176/1285 [01:48<11:06,  1.66it/s, total_it=176][Aepochs:   0%|          | 0/90 [01:49<?, ?it/s, loss=56.4, lr=0.001, d_time=0.00(0.02), f_time=0.57(0.59), b_time=0.57(0.61)]epochs:   0%|          | 0/90 [01:49<?, ?it/s, loss=56.4, lr=0.001, d_time=0.00(0.02), f_time=0.57(0.59), b_time=0.57(0.61)]
-train:  14%|█▍        | 177/1285 [01:49<10:24,  1.77it/s, total_it=176][A
-train:  14%|█▍        | 177/1285 [01:49<10:24,  1.77it/s, total_it=177][Aepochs:   0%|          | 0/90 [01:50<?, ?it/s, loss=53.9, lr=0.001, d_time=0.01(0.02), f_time=0.46(0.59), b_time=0.47(0.61)]epochs:   0%|          | 0/90 [01:50<?, ?it/s, loss=53.9, lr=0.001, d_time=0.01(0.02), f_time=0.46(0.59), b_time=0.47(0.61)]
-train:  14%|█▍        | 178/1285 [01:49<10:33,  1.75it/s, total_it=177][A
-train:  14%|█▍        | 178/1285 [01:49<10:33,  1.75it/s, total_it=178][Aepochs:   0%|          | 0/90 [01:50<?, ?it/s, loss=55.3, lr=0.001, d_time=0.01(0.02), f_time=0.57(0.58), b_time=0.59(0.61)]epochs:   0%|          | 0/90 [01:50<?, ?it/s, loss=55.3, lr=0.001, d_time=0.01(0.02), f_time=0.57(0.58), b_time=0.59(0.61)]
-train:  14%|█▍        | 179/1285 [01:50<10:39,  1.73it/s, total_it=178][A
-train:  14%|█▍        | 179/1285 [01:50<10:39,  1.73it/s, total_it=179][Aepochs:   0%|          | 0/90 [01:51<?, ?it/s, loss=49.3, lr=0.001, d_time=0.01(0.02), f_time=0.57(0.58), b_time=0.59(0.61)]epochs:   0%|          | 0/90 [01:51<?, ?it/s, loss=49.3, lr=0.001, d_time=0.01(0.02), f_time=0.57(0.58), b_time=0.59(0.61)]
-train:  14%|█▍        | 180/1285 [01:50<09:45,  1.89it/s, total_it=179][A
-train:  14%|█▍        | 180/1285 [01:50<09:45,  1.89it/s, total_it=180][Aepochs:   0%|          | 0/90 [01:51<?, ?it/s, loss=51.3, lr=0.001, d_time=0.00(0.02), f_time=0.41(0.58), b_time=0.41(0.61)]epochs:   0%|          | 0/90 [01:51<?, ?it/s, loss=51.3, lr=0.001, d_time=0.00(0.02), f_time=0.41(0.58), b_time=0.41(0.61)]
-train:  14%|█▍        | 181/1285 [01:51<10:26,  1.76it/s, total_it=180][A
-train:  14%|█▍        | 181/1285 [01:51<10:26,  1.76it/s, total_it=181][Aepochs:   0%|          | 0/90 [01:52<?, ?it/s, loss=52.1, lr=0.001, d_time=0.01(0.02), f_time=0.63(0.58), b_time=0.65(0.61)]epochs:   0%|          | 0/90 [01:52<?, ?it/s, loss=52.1, lr=0.001, d_time=0.01(0.02), f_time=0.63(0.58), b_time=0.65(0.61)]
-train:  14%|█▍        | 182/1285 [01:52<10:33,  1.74it/s, total_it=181][A
-train:  14%|█▍        | 182/1285 [01:52<10:33,  1.74it/s, total_it=182][Aepochs:   0%|          | 0/90 [01:52<?, ?it/s, loss=53.7, lr=0.001, d_time=0.01(0.02), f_time=0.57(0.58), b_time=0.58(0.61)]epochs:   0%|          | 0/90 [01:52<?, ?it/s, loss=53.7, lr=0.001, d_time=0.01(0.02), f_time=0.57(0.58), b_time=0.58(0.61)]
-train:  14%|█▍        | 183/1285 [01:52<10:14,  1.79it/s, total_it=182][A
-train:  14%|█▍        | 183/1285 [01:52<10:14,  1.79it/s, total_it=183][Aepochs:   0%|          | 0/90 [01:53<?, ?it/s, loss=52.9, lr=0.001, d_time=0.00(0.02), f_time=0.50(0.58), b_time=0.51(0.61)]epochs:   0%|          | 0/90 [01:53<?, ?it/s, loss=52.9, lr=0.001, d_time=0.00(0.02), f_time=0.50(0.58), b_time=0.51(0.61)]
-train:  14%|█▍        | 184/1285 [01:53<10:25,  1.76it/s, total_it=183][A
-train:  14%|█▍        | 184/1285 [01:53<10:25,  1.76it/s, total_it=184][Aepochs:   0%|          | 0/90 [01:53<?, ?it/s, loss=57.4, lr=0.001, d_time=0.01(0.02), f_time=0.57(0.58), b_time=0.59(0.61)]epochs:   0%|          | 0/90 [01:53<?, ?it/s, loss=57.4, lr=0.001, d_time=0.01(0.02), f_time=0.57(0.58), b_time=0.59(0.61)]
-train:  14%|█▍        | 185/1285 [01:53<09:30,  1.93it/s, total_it=184][A
-train:  14%|█▍        | 185/1285 [01:53<09:30,  1.93it/s, total_it=185][Aepochs:   0%|          | 0/90 [01:54<?, ?it/s, loss=49.4, lr=0.001, d_time=0.00(0.02), f_time=0.39(0.58), b_time=0.40(0.61)]epochs:   0%|          | 0/90 [01:54<?, ?it/s, loss=49.4, lr=0.001, d_time=0.00(0.02), f_time=0.39(0.58), b_time=0.40(0.61)]
-train:  14%|█▍        | 186/1285 [01:54<09:59,  1.83it/s, total_it=185][A
-train:  14%|█▍        | 186/1285 [01:54<09:59,  1.83it/s, total_it=186][Aepochs:   0%|          | 0/90 [01:54<?, ?it/s, loss=58.2, lr=0.001, d_time=0.00(0.02), f_time=0.60(0.58), b_time=0.60(0.61)]epochs:   0%|          | 0/90 [01:54<?, ?it/s, loss=58.2, lr=0.001, d_time=0.00(0.02), f_time=0.60(0.58), b_time=0.60(0.61)]
-train:  15%|█▍        | 187/1285 [01:54<09:58,  1.83it/s, total_it=186][A
-train:  15%|█▍        | 187/1285 [01:54<09:58,  1.83it/s, total_it=187][Aepochs:   0%|          | 0/90 [01:55<?, ?it/s, loss=58.1, lr=0.001, d_time=0.00(0.02), f_time=0.54(0.58), b_time=0.54(0.61)]epochs:   0%|          | 0/90 [01:55<?, ?it/s, loss=58.1, lr=0.001, d_time=0.00(0.02), f_time=0.54(0.58), b_time=0.54(0.61)]
-train:  15%|█▍        | 188/1285 [01:55<11:13,  1.63it/s, total_it=187][A
-train:  15%|█▍        | 188/1285 [01:55<11:13,  1.63it/s, total_it=188][Aepochs:   0%|          | 0/90 [01:56<?, ?it/s, loss=56.1, lr=0.001, d_time=0.00(0.02), f_time=0.77(0.58), b_time=0.77(0.61)]epochs:   0%|          | 0/90 [01:56<?, ?it/s, loss=56.1, lr=0.001, d_time=0.00(0.02), f_time=0.77(0.58), b_time=0.77(0.61)]
-train:  15%|█▍        | 189/1285 [01:55<10:05,  1.81it/s, total_it=188][A
-train:  15%|█▍        | 189/1285 [01:55<10:05,  1.81it/s, total_it=189][Aepochs:   0%|          | 0/90 [01:56<?, ?it/s, loss=54.7, lr=0.001, d_time=0.00(0.02), f_time=0.40(0.58), b_time=0.40(0.61)]epochs:   0%|          | 0/90 [01:56<?, ?it/s, loss=54.7, lr=0.001, d_time=0.00(0.02), f_time=0.40(0.58), b_time=0.40(0.61)]
-train:  15%|█▍        | 190/1285 [01:56<10:04,  1.81it/s, total_it=189][A
-train:  15%|█▍        | 190/1285 [01:56<10:04,  1.81it/s, total_it=190][Aepochs:   0%|          | 0/90 [01:57<?, ?it/s, loss=52.8, lr=0.001, d_time=0.00(0.02), f_time=0.54(0.58), b_time=0.55(0.61)]epochs:   0%|          | 0/90 [01:57<?, ?it/s, loss=52.8, lr=0.001, d_time=0.00(0.02), f_time=0.54(0.58), b_time=0.55(0.61)]
-train:  15%|█▍        | 191/1285 [01:57<10:39,  1.71it/s, total_it=190][A
-train:  15%|█▍        | 191/1285 [01:57<10:39,  1.71it/s, total_it=191][Aepochs:   0%|          | 0/90 [01:57<?, ?it/s, loss=54.3, lr=0.001, d_time=0.01(0.02), f_time=0.64(0.58), b_time=0.65(0.61)]epochs:   0%|          | 0/90 [01:57<?, ?it/s, loss=54.3, lr=0.001, d_time=0.01(0.02), f_time=0.64(0.58), b_time=0.65(0.61)]
-train:  15%|█▍        | 192/1285 [01:57<10:49,  1.68it/s, total_it=191][A
-train:  15%|█▍        | 192/1285 [01:57<10:49,  1.68it/s, total_it=192][Aepochs:   0%|          | 0/90 [01:58<?, ?it/s, loss=49.9, lr=0.001, d_time=0.00(0.02), f_time=0.60(0.58), b_time=0.61(0.61)]epochs:   0%|          | 0/90 [01:58<?, ?it/s, loss=49.9, lr=0.001, d_time=0.00(0.02), f_time=0.60(0.58), b_time=0.61(0.61)]
-train:  15%|█▌        | 193/1285 [01:58<10:50,  1.68it/s, total_it=192][A
-train:  15%|█▌        | 193/1285 [01:58<10:50,  1.68it/s, total_it=193][Aepochs:   0%|          | 0/90 [01:59<?, ?it/s, loss=51.5, lr=0.001, d_time=0.01(0.02), f_time=0.59(0.58), b_time=0.60(0.61)]epochs:   0%|          | 0/90 [01:59<?, ?it/s, loss=51.5, lr=0.001, d_time=0.01(0.02), f_time=0.59(0.58), b_time=0.60(0.61)]
-train:  15%|█▌        | 194/1285 [01:59<11:39,  1.56it/s, total_it=193][A
-train:  15%|█▌        | 194/1285 [01:59<11:39,  1.56it/s, total_it=194][Aepochs:   0%|          | 0/90 [01:59<?, ?it/s, loss=55.8, lr=0.001, d_time=0.00(0.02), f_time=0.74(0.58), b_time=0.75(0.61)]epochs:   0%|          | 0/90 [01:59<?, ?it/s, loss=55.8, lr=0.001, d_time=0.00(0.02), f_time=0.74(0.58), b_time=0.75(0.61)]
-train:  15%|█▌        | 195/1285 [01:59<11:35,  1.57it/s, total_it=194][A
-train:  15%|█▌        | 195/1285 [01:59<11:35,  1.57it/s, total_it=195][Aepochs:   0%|          | 0/90 [02:00<?, ?it/s, loss=59.2, lr=0.001, d_time=0.00(0.02), f_time=0.61(0.58), b_time=0.62(0.61)]epochs:   0%|          | 0/90 [02:00<?, ?it/s, loss=59.2, lr=0.001, d_time=0.00(0.02), f_time=0.61(0.58), b_time=0.62(0.61)]
-train:  15%|█▌        | 196/1285 [02:00<11:29,  1.58it/s, total_it=195][A
-train:  15%|█▌        | 196/1285 [02:00<11:29,  1.58it/s, total_it=196][Aepochs:   0%|          | 0/90 [02:01<?, ?it/s, loss=53.2, lr=0.001, d_time=0.00(0.02), f_time=0.61(0.58), b_time=0.61(0.61)]epochs:   0%|          | 0/90 [02:01<?, ?it/s, loss=53.2, lr=0.001, d_time=0.00(0.02), f_time=0.61(0.58), b_time=0.61(0.61)]
-train:  15%|█▌        | 197/1285 [02:00<11:11,  1.62it/s, total_it=196][A
-train:  15%|█▌        | 197/1285 [02:00<11:11,  1.62it/s, total_it=197][Aepochs:   0%|          | 0/90 [02:01<?, ?it/s, loss=54.1, lr=0.001, d_time=0.00(0.02), f_time=0.57(0.58), b_time=0.58(0.61)]epochs:   0%|          | 0/90 [02:01<?, ?it/s, loss=54.1, lr=0.001, d_time=0.00(0.02), f_time=0.57(0.58), b_time=0.58(0.61)]
-train:  15%|█▌        | 198/1285 [02:01<10:34,  1.71it/s, total_it=197][A
-train:  15%|█▌        | 198/1285 [02:01<10:34,  1.71it/s, total_it=198][Aepochs:   0%|          | 0/90 [02:02<?, ?it/s, loss=62.5, lr=0.001, d_time=0.01(0.02), f_time=0.48(0.58), b_time=0.49(0.61)]epochs:   0%|          | 0/90 [02:02<?, ?it/s, loss=62.5, lr=0.001, d_time=0.01(0.02), f_time=0.48(0.58), b_time=0.49(0.61)]
-train:  15%|█▌        | 199/1285 [02:02<10:33,  1.71it/s, total_it=198][A
-train:  15%|█▌        | 199/1285 [02:02<10:33,  1.71it/s, total_it=199][Aepochs:   0%|          | 0/90 [02:02<?, ?it/s, loss=55.1, lr=0.001, d_time=0.00(0.02), f_time=0.57(0.58), b_time=0.58(0.61)]epochs:   0%|          | 0/90 [02:02<?, ?it/s, loss=55.1, lr=0.001, d_time=0.00(0.02), f_time=0.57(0.58), b_time=0.58(0.61)]
-train:  16%|█▌        | 200/1285 [02:02<09:57,  1.82it/s, total_it=199][A
-train:  16%|█▌        | 200/1285 [02:02<09:57,  1.82it/s, total_it=200][Aepochs:   0%|          | 0/90 [02:03<?, ?it/s, loss=57.1, lr=0.001, d_time=0.00(0.02), f_time=0.46(0.58), b_time=0.47(0.61)]epochs:   0%|          | 0/90 [02:03<?, ?it/s, loss=57.1, lr=0.001, d_time=0.00(0.02), f_time=0.46(0.58), b_time=0.47(0.61)]
-train:  16%|█▌        | 201/1285 [02:03<09:46,  1.85it/s, total_it=200][A
-train:  16%|█▌        | 201/1285 [02:03<09:46,  1.85it/s, total_it=201][Aepochs:   0%|          | 0/90 [02:03<?, ?it/s, loss=48.9, lr=0.001, d_time=0.00(0.02), f_time=0.51(0.58), b_time=0.52(0.61)]epochs:   0%|          | 0/90 [02:03<?, ?it/s, loss=48.9, lr=0.001, d_time=0.00(0.02), f_time=0.51(0.58), b_time=0.52(0.61)]
-train:  16%|█▌        | 202/1285 [02:03<10:07,  1.78it/s, total_it=201][A
-train:  16%|█▌        | 202/1285 [02:03<10:07,  1.78it/s, total_it=202][Aepochs:   0%|          | 0/90 [02:04<?, ?it/s, loss=52.5, lr=0.001, d_time=0.00(0.02), f_time=0.59(0.58), b_time=0.60(0.61)]epochs:   0%|          | 0/90 [02:04<?, ?it/s, loss=52.5, lr=0.001, d_time=0.00(0.02), f_time=0.59(0.58), b_time=0.60(0.61)]
-train:  16%|█▌        | 203/1285 [02:04<10:13,  1.76it/s, total_it=202][A
-train:  16%|█▌        | 203/1285 [02:04<10:13,  1.76it/s, total_it=203][Aepochs:   0%|          | 0/90 [02:04<?, ?it/s, loss=55.3, lr=0.001, d_time=0.00(0.02), f_time=0.58(0.58), b_time=0.58(0.61)]epochs:   0%|          | 0/90 [02:04<?, ?it/s, loss=55.3, lr=0.001, d_time=0.00(0.02), f_time=0.58(0.58), b_time=0.58(0.61)]
-train:  16%|█▌        | 204/1285 [02:04<09:50,  1.83it/s, total_it=203][A
-train:  16%|█▌        | 204/1285 [02:04<09:50,  1.83it/s, total_it=204][Aepochs:   0%|          | 0/90 [02:05<?, ?it/s, loss=67.2, lr=0.001, d_time=0.00(0.02), f_time=0.49(0.58), b_time=0.49(0.61)]epochs:   0%|          | 0/90 [02:05<?, ?it/s, loss=67.2, lr=0.001, d_time=0.00(0.02), f_time=0.49(0.58), b_time=0.49(0.61)]
-train:  16%|█▌        | 205/1285 [02:05<09:20,  1.93it/s, total_it=204][A
-train:  16%|█▌        | 205/1285 [02:05<09:20,  1.93it/s, total_it=205][Aepochs:   0%|          | 0/90 [02:05<?, ?it/s, loss=47.9, lr=0.001, d_time=0.00(0.02), f_time=0.44(0.58), b_time=0.45(0.60)]epochs:   0%|          | 0/90 [02:05<?, ?it/s, loss=47.9, lr=0.001, d_time=0.00(0.02), f_time=0.44(0.58), b_time=0.45(0.60)]
-train:  16%|█▌        | 206/1285 [02:05<09:36,  1.87it/s, total_it=205][A
-train:  16%|█▌        | 206/1285 [02:05<09:36,  1.87it/s, total_it=206][Aepochs:   0%|          | 0/90 [02:06<?, ?it/s, loss=49.5, lr=0.001, d_time=0.01(0.02), f_time=0.56(0.58), b_time=0.57(0.60)]epochs:   0%|          | 0/90 [02:06<?, ?it/s, loss=49.5, lr=0.001, d_time=0.01(0.02), f_time=0.56(0.58), b_time=0.57(0.60)]
-train:  16%|█▌        | 207/1285 [02:06<08:57,  2.01it/s, total_it=206][A
-train:  16%|█▌        | 207/1285 [02:06<08:57,  2.01it/s, total_it=207][Aepochs:   0%|          | 0/90 [02:06<?, ?it/s, loss=52.2, lr=0.001, d_time=0.01(0.02), f_time=0.40(0.58), b_time=0.41(0.60)]epochs:   0%|          | 0/90 [02:06<?, ?it/s, loss=52.2, lr=0.001, d_time=0.01(0.02), f_time=0.40(0.58), b_time=0.41(0.60)]
-train:  16%|█▌        | 208/1285 [02:06<09:20,  1.92it/s, total_it=207][A
-train:  16%|█▌        | 208/1285 [02:06<09:20,  1.92it/s, total_it=208][Aepochs:   0%|          | 0/90 [02:07<?, ?it/s, loss=53.8, lr=0.001, d_time=0.01(0.02), f_time=0.55(0.58), b_time=0.57(0.60)]epochs:   0%|          | 0/90 [02:07<?, ?it/s, loss=53.8, lr=0.001, d_time=0.01(0.02), f_time=0.55(0.58), b_time=0.57(0.60)]
-train:  16%|█▋        | 209/1285 [02:07<10:21,  1.73it/s, total_it=208][A
-train:  16%|█▋        | 209/1285 [02:07<10:21,  1.73it/s, total_it=209][Aepochs:   0%|          | 0/90 [02:08<?, ?it/s, loss=54, lr=0.001, d_time=0.02(0.02), f_time=0.68(0.58), b_time=0.71(0.60)]  epochs:   0%|          | 0/90 [02:08<?, ?it/s, loss=54, lr=0.001, d_time=0.02(0.02), f_time=0.68(0.58), b_time=0.71(0.60)]
-train:  16%|█▋        | 210/1285 [02:07<10:19,  1.73it/s, total_it=209][A
-train:  16%|█▋        | 210/1285 [02:08<10:19,  1.73it/s, total_it=210][Aepochs:   0%|          | 0/90 [02:08<?, ?it/s, loss=58.1, lr=0.001, d_time=0.01(0.02), f_time=0.55(0.58), b_time=0.56(0.60)]epochs:   0%|          | 0/90 [02:08<?, ?it/s, loss=58.1, lr=0.001, d_time=0.01(0.02), f_time=0.55(0.58), b_time=0.56(0.60)]
-train:  16%|█▋        | 211/1285 [02:08<10:35,  1.69it/s, total_it=210][A
-train:  16%|█▋        | 211/1285 [02:08<10:35,  1.69it/s, total_it=211][Aepochs:   0%|          | 0/90 [02:09<?, ?it/s, loss=48.4, lr=0.001, d_time=0.00(0.02), f_time=0.62(0.58), b_time=0.62(0.60)]epochs:   0%|          | 0/90 [02:09<?, ?it/s, loss=48.4, lr=0.001, d_time=0.00(0.02), f_time=0.62(0.58), b_time=0.62(0.60)]
-train:  16%|█▋        | 212/1285 [02:09<10:18,  1.73it/s, total_it=211][A
-train:  16%|█▋        | 212/1285 [02:09<10:18,  1.73it/s, total_it=212][Aepochs:   0%|          | 0/90 [02:09<?, ?it/s, loss=53.8, lr=0.001, d_time=0.00(0.02), f_time=0.52(0.58), b_time=0.53(0.60)]epochs:   0%|          | 0/90 [02:09<?, ?it/s, loss=53.8, lr=0.001, d_time=0.00(0.02), f_time=0.52(0.58), b_time=0.53(0.60)]
-train:  17%|█▋        | 213/1285 [02:09<10:57,  1.63it/s, total_it=212][A
-train:  17%|█▋        | 213/1285 [02:09<10:57,  1.63it/s, total_it=213][Aepochs:   0%|          | 0/90 [02:10<?, ?it/s, loss=49.6, lr=0.001, d_time=0.00(0.02), f_time=0.69(0.58), b_time=0.70(0.60)]epochs:   0%|          | 0/90 [02:10<?, ?it/s, loss=49.6, lr=0.001, d_time=0.00(0.02), f_time=0.69(0.58), b_time=0.70(0.60)]
-train:  17%|█▋        | 214/1285 [02:10<11:19,  1.58it/s, total_it=213][A
-train:  17%|█▋        | 214/1285 [02:10<11:19,  1.58it/s, total_it=214][Aepochs:   0%|          | 0/90 [02:11<?, ?it/s, loss=48.8, lr=0.001, d_time=0.00(0.02), f_time=0.66(0.58), b_time=0.68(0.60)]epochs:   0%|          | 0/90 [02:11<?, ?it/s, loss=48.8, lr=0.001, d_time=0.00(0.02), f_time=0.66(0.58), b_time=0.68(0.60)]
-train:  17%|█▋        | 215/1285 [02:11<10:50,  1.65it/s, total_it=214][A
-train:  17%|█▋        | 215/1285 [02:11<10:50,  1.65it/s, total_it=215][Aepochs:   0%|          | 0/90 [02:11<?, ?it/s, loss=52.4, lr=0.001, d_time=0.00(0.02), f_time=0.52(0.58), b_time=0.53(0.60)]epochs:   0%|          | 0/90 [02:11<?, ?it/s, loss=52.4, lr=0.001, d_time=0.00(0.02), f_time=0.52(0.58), b_time=0.53(0.60)]
-train:  17%|█▋        | 216/1285 [02:11<10:55,  1.63it/s, total_it=215][A
-train:  17%|█▋        | 216/1285 [02:11<10:55,  1.63it/s, total_it=216][Aepochs:   0%|          | 0/90 [02:12<?, ?it/s, loss=51, lr=0.001, d_time=0.00(0.02), f_time=0.61(0.58), b_time=0.62(0.60)]  epochs:   0%|          | 0/90 [02:12<?, ?it/s, loss=51, lr=0.001, d_time=0.00(0.02), f_time=0.61(0.58), b_time=0.62(0.60)]
-train:  17%|█▋        | 217/1285 [02:12<11:40,  1.52it/s, total_it=216][A
-train:  17%|█▋        | 217/1285 [02:12<11:40,  1.52it/s, total_it=217][Aepochs:   0%|          | 0/90 [02:13<?, ?it/s, loss=51.1, lr=0.001, d_time=0.00(0.02), f_time=0.75(0.58), b_time=0.75(0.60)]epochs:   0%|          | 0/90 [02:13<?, ?it/s, loss=51.1, lr=0.001, d_time=0.00(0.02), f_time=0.75(0.58), b_time=0.75(0.60)]
-train:  17%|█▋        | 218/1285 [02:13<11:00,  1.61it/s, total_it=217][A
-train:  17%|█▋        | 218/1285 [02:13<11:00,  1.61it/s, total_it=218][Aepochs:   0%|          | 0/90 [02:13<?, ?it/s, loss=47.8, lr=0.001, d_time=0.00(0.02), f_time=0.53(0.58), b_time=0.53(0.60)]epochs:   0%|          | 0/90 [02:13<?, ?it/s, loss=47.8, lr=0.001, d_time=0.00(0.02), f_time=0.53(0.58), b_time=0.53(0.60)]epochs:   0%|          | 0/90 [02:14<?, ?it/s, loss=47.8, lr=0.001, d_time=0.00(0.02), f_time=0.53(0.58), b_time=0.53(0.60)]
-
-Frame :  004928
-
-Frame :  000252
-
-Frame :  003858
-
-Frame :  000191
-
-Frame :  002229
-
-Frame :  002021
-
-Frame :  000704
-
-Frame :  000761
-
-Frame :  003780
-
-Frame :  002555
-
-Frame :  003994
-
-Frame :  002394
-
-Frame :  000973
-
-Frame :  000069
-
-Frame :  001117
-
-Frame :  004188
-
-Frame :  002103
-
-Frame :  001091
-
-Frame :  000780
-
-Frame :  002857
-
-Frame :  004338
-
-Frame :  002701
-
-Frame :  002307
-
-Frame :  002263
-
-Frame :  002250
-
-Frame :  001203
-
-Frame :  002171
-
-Frame :  002271
-
-Frame :  000216
-
-Frame :  002195
-
-Frame :  005126
-
-Frame :  001624
-
-Frame :  000656
-
-Frame :  003890
-
-Frame :  003578
-
-Frame :  001552
-
-Frame :  005038
-
-Frame :  002967
-
-Frame :  004259
-
-Frame :  001929
-
-Frame :  004076
-
-Frame :  000432
-
-Frame :  003195
-
-Frame :  003176
-
-Frame :  003378
-
-Frame :  002426
-
-Frame :  002037
-
-Frame :  002510
-
-Frame :  002317
-
-Frame :  001940
-
-Frame :  001313
-
-Frame :  000418
-
-Frame :  004676
-
-Frame :  004644
-
-Frame :  003428
-
-Frame :  002859
-
-Frame :  004655
-
-Frame :  002343
-
-Frame :  000329
-
-Frame :  004064
-
-Frame :  003583
-
-Frame :  002268
-
-Frame :  001130
-
-Frame :  000469
-
-Frame :  004139
-
-Frame :  002609
-
-Frame :  002863
-
-Frame :  001562
-
-Frame :  000080
-
-Frame :  003119
-
-Frame :  001485
-
-Frame :  003679
-
-Frame :  003537
-
-Frame :  000244
-
-Frame :  000087
-
-Frame :  001459
-
-Frame :  001079
-
-Frame :  002449
-
-Frame :  000689
-
-Frame :  004497
-
-Frame :  002559
-
-Frame :  003589
-
-Frame :  003657
-
-Frame :  004663
-
-Frame :  001212
-
-Frame :  000911
-
-Frame :  001546
-
-Frame :  004425
-
-Frame :  004862
-
-Frame :  002996
-
-Frame :  000426
-
-Frame :  004989
-
-Frame :  002194
-
-Frame :  004059
-
-Frame :  002852
-
-Frame :  000453
-
-Frame :  001415
-
-Frame :  002398
-
-Frame :  003795
-
-Frame :  003512
-
-Frame :  003441
-
-Frame :  002763
-
-Frame :  002548
-
-Frame :  001982
-
-Frame :  002842
-
-Frame :  003257
-
-Frame :  003748
-
-Frame :  003022
-
-Frame :  003599
-
-Frame :  001890
-
-Frame :  001753
-
-Frame :  003265
-
-Frame :  001472
-
-Frame :  004451
-
-Frame :  002001
-
-Frame :  001826
-
-Frame :  005033
-
-Frame :  000471
-
-Frame :  003285
-
-Frame :  004901
-
-Frame :  000033
-
-Frame :  003669
-
-Frame :  002912
-
-Frame :  002808
-
-Frame :  002131
-
-Frame :  001473
-
-Frame :  004556
-
-Frame :  002932
-
-Frame :  002926
-
-Frame :  003003
-
-Frame :  004365
-
-Frame :  001979
-
-Frame :  000321
-
-Frame :  002670
-
-Frame :  004045
-
-Frame :  001015
-
-Frame :  004557
-
-Frame :  003405
-
-Frame :  000858
-
-Frame :  000140
-
-Frame :  002815
-
-Frame :  003066
-
-Frame :  004213
-
-Frame :  000268
-
-Frame :  002141
-
-Frame :  000421
-
-Frame :  003037
-
-Frame :  003886
-
-Frame :  004967
-
-Frame :  003834
-
-Frame :  000050
-
-Frame :  002401
-
-Frame :  001639
-
-Frame :  002073
-
-Frame :  004078
-
-Frame :  001761
-
-Frame :  002145
-
-Frame :  003856
-
-Frame :  003341
-
-Frame :  000450
-
-Frame :  001177
-
-Frame :  000632
-
-Frame :  002983
-
-Frame :  002876
-
-Frame :  004731
-
-Frame :  000519
-
-Frame :  002164
-
-Frame :  001334
-
-Frame :  002285
-
-Frame :  001452
-
-Frame :  003629
-
-Frame :  003210
-
-Frame :  001620
-
-Frame :  002865
-
-Frame :  004443
-
-Frame :  004750
-
-Frame :  004608
-
-Frame :  003026
-
-Frame :  002023
-
-Frame :  002602
-
-Frame :  005120
-
-Frame :  002701
-
-Frame :  001028
-
-Frame :  003062
-
-Frame :  000300
-
-Frame :  004563
-
-Frame :  002739
-
-Frame :  000570
-
-Frame :  001211
-
-Frame :  001727
-
-Frame :  004832
-
-Frame :  001160
-
-Frame :  001328
-
-Frame :  004212
-
-Frame :  004673
-
-Frame :  001402
-
-Frame :  000554
-
-Frame :  001447
-
-Frame :  003688
-
-Frame :  004006
-
-Frame :  000138
-
-Frame :  003786
-
-Frame :  002838
-
-Frame :  005101
-
-Frame :  000753
-
-Frame :  004444
-
-Frame :  002827
-
-Frame :  004895
-
-Frame :  001322
-
-Frame :  003074
-
-Frame :  004358
-
-Frame :  002193
-
-Frame :  002000
-
-Frame :  003978
-
-Frame :  001121
-
-Frame :  002331
-
-Frame :  001580
-
-Frame :  001220
-
-Frame :  000057
-
-Frame :  002016
-
-Frame :  000839
-
-Frame :  002554
-
-Frame :  004333
-
-Frame :  003034
-
-Frame :  000777
-
-Frame :  002162
-
-Frame :  000503
-
-Frame :  002464
-
-Frame :  004184
-
-Frame :  001063
-
-Frame :  002400
-
-Frame :  003243
-
-Frame :  002477
-
-Frame :  001939
-
-Frame :  002875
-
-Frame :  001156
-
-Frame :  004821
-
-Frame :  001906
-
-Frame :  003596
-
-Frame :  000854
-
-Frame :  002025
-
-Frame :  004908
-
-Frame :  004249
-
-Frame :  004145
-
-Frame :  004312
-
-Frame :  002420
-
-Frame :  003769
-
-Frame :  003883
-
-Frame :  002185
-
-Frame :  001210
-
-Frame :  001841
-
-Frame :  000728
-
-*****Mean_vfe
-hm_loss:2.9299707412719727 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.5181710720062256 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.1374337673187256 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.1959075927734375 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.2377266883850098 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.6145925521850586 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.317244291305542 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:2.940962791442871 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.427391290664673 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.1544852256774902 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.4152207374572754 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:2.9663071632385254 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.1640677452087402 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.0896246433258057 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.4628028869628906 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.262943744659424 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.227062702178955 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.5623269081115723 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.423405647277832 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.3000636100769043 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.2120771408081055 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.0750725269317627 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:2.9313697814941406 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.3853671550750732 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.5662803649902344 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.098207473754883 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.341132164001465 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.22637677192688 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.161196708679199 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.1995270252227783 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.242115020751953 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.265164375305176 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.02207350730896 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.309234142303467 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.267080545425415 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.041257619857788 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.525743007659912 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.4321532249450684 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:2.764925718307495 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.1734495162963867 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.2998275756835938 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.2924113273620605 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.0302577018737793 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.7163445949554443 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.2374467849731445 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.3143508434295654 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.1227219104766846 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.6131837368011475 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.131268262863159 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.2316932678222656 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.037668466567993 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:2.9285340309143066 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.2214763164520264 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:2.904054880142212 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.453268527984619 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.3230044841766357 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.451676607131958 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.2878332138061523 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.2685461044311523 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.348093032836914 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:2.9123244285583496 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.246744155883789 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.101774215698242 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.447399377822876 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:2.827723979949951 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.0115296840667725 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:2.859379291534424 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.2536113262176514 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.392479181289673 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.333132266998291 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:2.8085379600524902 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.110705614089966 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.133815288543701 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:2.8010928630828857 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.1691207885742188 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.1762309074401855 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.2427597045898438 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.1356499195098877 = 20*hm_loss_N/2
-
-*****Mean_vfe
-hm_loss:3.097656011581421 = 20*hm_loss_N/2
-
-Frame :  003840
-
-Frame :  001938
-
-Frame :  004119
-
-Frame :  003113
-
-Frame :  003182
-
-Frame :  000361
-
-Frame :  002152
-
-Frame :  004737
-Traceback (most recent call last):
-  File "/data1/liufuyang/code/Dual-Radar/tools/train.py", line 274, in <module>
-    main()
-  File "/data1/liufuyang/code/Dual-Radar/tools/train.py", line 226, in main
-    train_model(
-  File "/data1/liufuyang/code/Dual-Radar/tools/train_utils/train_utils.py", line 111, in train_model
-    accumulated_iter = train_one_epoch(
-  File "/data1/liufuyang/code/Dual-Radar/tools/train_utils/train_utils.py", line 47, in train_one_epoch
-    loss, tb_dict, disp_dict = model_func(model, batch)
-  File "/data1/liufuyang/code/Dual-Radar/tools/../pcdet/models/__init__.py", line 42, in model_func
-    ret_dict, tb_dict, disp_dict = model(batch_dict)
-  File "/home/liufuyang/anaconda3/envs/Dual-Radardet2/lib/python3.9/site-packages/torch/nn/modules/module.py", line 889, in _call_impl
-    result = self.forward(*input, **kwargs)
-  File "/data1/liufuyang/code/Dual-Radar/tools/../pcdet/models/detectors/voxel_rcnn.py", line 14, in forward
-    loss, tb_dict, disp_dict = self.get_training_loss()
-  File "/data1/liufuyang/code/Dual-Radar/tools/../pcdet/models/detectors/voxel_rcnn.py", line 32, in get_training_loss
-    loss_rcnn, tb_dict = self.roi_head.get_loss(tb_dict)
-  File "/data1/liufuyang/code/Dual-Radar/tools/../pcdet/models/roi_heads/roi_head_template.py", line 227, in get_loss
-    rcnn_loss_reg, reg_tb_dict = self.get_box_reg_layer_loss(self.forward_ret_dict)
-  File "/data1/liufuyang/code/Dual-Radar/tools/../pcdet/models/roi_heads/roi_head_template.py", line 155, in get_box_reg_layer_loss
-    reg_targets = self.box_coder.encode_torch(
-  File "/data1/liufuyang/code/Dual-Radar/tools/../pcdet/utils/box_coder_utils.py", line 42, in encode_torch
-    diagonal = torch.sqrt(dxa ** 2 + dya ** 2)
-KeyboardInterrupt
-
-Frame :  004540
-
-Frame :  000651
-
-Frame :  001501
-
-Frame :  000876
-
-Frame :  000447
-
-Frame :  004605
-
-Frame :  004014
-
-Frame :  000387
-
-Frame :  005057
-
-Frame :  001597
-
-Frame :  000250
-
-Frame :  003246
-
-Frame :  002521
-
-Frame :  000598
-
-Frame :  000961
-
-Frame :  005138
-
-Frame :  002603
-
-Frame :  004385
-
-Frame :  003471
-
-Frame :  000771
-
-Frame :  000907
-
-Frame :  000558
-
-Frame :  004436
-
-Frame :  003560
-
-Frame :  003929
-
-Frame :  001606
-
-Frame :  001782
-
-Frame :  003111
-
-Frame :  005131
-
-Frame :  000613
-
-Frame :  004829
-
-Frame :  004833
-
-Frame :  004855
-
-Frame :  004370
-
-Frame :  001496
-
-Frame :  002030
-
-Frame :  003027
-
-Frame :  001764
-
-Frame :  003465
-
-Frame :  001933
-
-Frame :  003470
-
-Frame :  002211
-
-Frame :  001752
-
-Frame :  002035
-
-Frame :  000403
-
-Frame :  000653
-
-Frame :  000529
-
-Frame :  001500
-
-Frame :  004873
-
-Frame :  002684
-
-Frame :  003273
-
-Frame :  004531
-
-Frame :  000827
-
-Frame :  002097
-
-Frame :  001851
-
-Frame :  001499
-
-Frame :  001548
-
-Frame :  002531
-
-Frame :  003199
-
-Frame :  004574
-
-Frame :  000011
-
-Frame :  002613
-
-Frame :  003099
-
-Frame :  001385
-
-Frame :  002479
-
-Frame :  003557
-
-Frame :  001185
-
-Frame :  003762
-
-Frame :  002143
-
-Frame :  005074
-
-Frame :  003274
-
-Frame :  001249
-
-Frame :  002230
-
-Frame :  000084
-
-Frame :  000198
-
-Frame :  003694
-
-Frame :  002935
-
-Frame :  004237
-
-Frame :  003451
-
-Frame :  003773
-
-Frame :  004355
-
-Frame :  003686
-
-Frame :  004248
-
-Frame :  000734
-
-Frame :  002320
-
-Frame :  005077
-
-Frame :  002413
-
-Frame :  002067
-
-Frame :  000254
-
-Frame :  000235
-
-Frame :  004944
-
-Frame :  004543
-
-Frame :  002484
-
-Frame :  001332
-
-Frame :  004550
-
-Frame :  001163
-
-Frame :  000922
-
-Frame :  001347
-
-Frame :  001962
-
-Frame :  003541
-
-Frame :  001390
-
-Frame :  003991
-
-Frame :  001898
-
-Frame :  003855
-
-Frame :  003551
-
-Frame :  003705
-
-Frame :  001819
-
-Frame :  001619
-
-Frame :  005020
-
-Frame :  001025
-
-Frame :  000071
-
-Frame :  000783
-
-Frame :  001072
-
-Frame :  004843
-
-Frame :  002821
-
-Frame :  002411
-
-Frame :  002710
-
-Frame :  005137
-
-Frame :  002695
-
-Frame :  004037
-
-Frame :  004722
-
-Frame :  003131
-
-Frame :  003463
-
-Frame :  000063
-
-Frame :  004892
-
-Frame :  004271
-
-Frame :  001507
-
-Frame :  002105
-
-Frame :  004117
-
-Frame :  004688
-
-Frame :  003117
-
-Frame :  000230
-
-Frame :  002621
-
-Frame :  002231
-
-Frame :  000434
-
-Frame :  004764
-
-Frame :  004137
-
-Frame :  001183
-
-Frame :  002579
-
-Frame :  002775
-
-Frame :  004152
-
-Frame :  002606
-
-Frame :  004029
-
-Frame :  004804
-
-Frame :  002902
-
-Frame :  002977
-
-Frame :  001543
-
-Frame :  003812
-
-Frame :  003086
-
-Frame :  000733
-
-Frame :  002973
-
-Frame :  001515
-
-Frame :  003950
-
-Frame :  003315
-
-Frame :  001718
-
-Frame :  001225
-
-Frame :  004343
-
-Frame :  004186
-
-Frame :  002445
-
-Frame :  001357
-
-Frame :  001738
-
-Frame :  000356
-
-Frame :  001352
-
-Frame :  003813
-
-Frame :  000328
-
-Frame :  000246
-
-Frame :  004238
-
-Frame :  001837
-
-Frame :  000520
-
-Frame :  002121
-
-Frame :  000990
-
-Frame :  003898
-
-Frame :  003444
-
-Frame :  002241
-
-Frame :  005040
-
-Frame :  002820
-
-Frame :  003233
-
-Frame :  002133
-
-Frame :  004836
-
-Frame :  004697
-
-Frame :  001153
-
-Frame :  003805
-
-Frame :  004223
-
-Frame :  002254
-
-Frame :  002588
-
-Frame :  000794
-
-Frame :  001954
-
-Frame :  000976
-
-Frame :  001074
-
-Frame :  001913
-
-Frame :  003113
-
-Frame :  000987
-
-Frame :  003204
-
-Frame :  004888
-
-Frame :  004986
-
-Frame :  002939
-
-Frame :  000455
-
-Frame :  003783
-
-Frame :  001521
-
-Frame :  004876
-
-Frame :  002340
-
-Frame :  004142
-
-Frame :  004378
-
-Frame :  003789
-
-Frame :  004012
-
-Frame :  003321
-
-Frame :  003262
-
-Frame :  002917
-
-Frame :  001429
-
-Frame :  001622
-
-Frame :  002976
-
-Frame :  001247
-
-Frame :  002405
-
-Frame :  001823
-
-Frame :  004872
-
-Frame :  003239
-
-Frame :  002898
-
-Frame :  001092
-
-Frame :  005111
-
-Frame :  004712
-
-Frame :  001272
-
-Frame :  002824
-
-Frame :  004807
-
-Frame :  002905
-
-Frame :  000231
-
-Frame :  001001
-
-Frame :  005091
-
-Frame :  004860
-
-Frame :  003995
-
-Frame :  003495
-
-Frame :  004088
-
-Frame :  002961
-
-Frame :  002119
-
-Frame :  003392
-
-Frame :  004225
-
-Frame :  002574
-
-Frame :  000923
-
-Frame :  004947
-
-Frame :  005071
-
-Frame :  003207
-
-Frame :  001359
-
-Frame :  005125
-
-Frame :  003535
-
-Frame :  000354
-
-Frame :  002106
-
-Frame :  004607
-
-Frame :  002130
-
-Frame :  000394
-
-Frame :  004171
-
-Frame :  002766
-
-Frame :  002542
-
-Frame :  000523
-
-Frame :  001194
-
-Frame :  004796
-
-Frame :  000055
-
-Frame :  004910
-
-Frame :  001860
-
-Frame :  003202
-
-Frame :  004611
-
-Frame :  000467
-
-Frame :  003806
-
-Frame :  002762
-
-Frame :  004047
-
-Frame :  000306
-
-Frame :  000040
-
-Frame :  002589
-
-Frame :  002004
-
-Frame :  001374
-
-Frame :  000459
-
-Frame :  004753
-
-Frame :  003168
-
-Frame :  004708
-
-Frame :  001308
-
-Frame :  000838
-
-Frame :  003149
-
-Frame :  003145
-
-Frame :  002496
-
-Frame :  000473
-
-Frame :  002963
-
-Frame :  001534
-
-Frame :  002284
-
-Frame :  002414
-
-Frame :  004504
-
-Frame :  003870
-
-Frame :  001209
-
-Frame :  000763
-
-Frame :  000070
-
-Frame :  004755
-
-Frame :  004683
-
-Frame :  003936
-
-Frame :  003208
-
-Frame :  004206
-
-Frame :  001693
-
-Frame :  000068
-
-Frame :  004061
-
-Frame :  000998
-
-Frame :  001438
-
-Frame :  001910
-
-Frame :  002359
-
-Frame :  002623
-
-Frame :  002949
-
-Frame :  000682
-
-Frame :  001751
-
-Frame :  001141
-
-Frame :  001569
-
-Frame :  001491
-
-Frame :  000859
-
-Frame :  001817
-
-Frame :  001925
-
-Frame :  000546
-
-Frame :  004926
-
-Frame :  003343
-
-Frame :  002897
-
-Frame :  005088
-
-Frame :  003061
-
-Frame :  003167
-
-Frame :  005017
-
-Frame :  000039
-
-Frame :  004870
-
-Frame :  000288
-
-Frame :  002516
-
-Frame :  001187
-
-Frame :  004915
-
-Frame :  001903
-
-Frame :  000522
-
-Frame :  003996
-
-Frame :  002262
-
-Frame :  002529
-
-Frame :  001372
-
-Frame :  002208
-
-Frame :  002135
-
-Frame :  004844
-
-Frame :  003614
-
-Frame :  004984
-
-Frame :  002237
-
-Frame :  001949
-
-Frame :  002346
-
-Frame :  004055
-
-Frame :  001626
-
-Frame :  002409
-
-Frame :  003768
-
-Frame :  003820
-
-Frame :  001793
-
-Frame :  003248
-
-Frame :  003524
-
-Frame :  004408
-
-Frame :  002249
-
-Frame :  004135
-
-Frame :  000845
-
-Frame :  005036
-
-Frame :  001024
-
-Frame :  001037
-
-Frame :  004490
-
-Frame :  003336
-
-Frame :  000847
-
-Frame :  003888
-
-Frame :  005073
-
-Frame :  001087
-
-Frame :  003106
-
-Frame :  001179
-
-Frame :  002350
-
-Frame :  001218
-
-Frame :  003415
-
-Frame :  004368
-
-Frame :  002716
-
-Frame :  004046
-
-Frame :  003924
-
-Frame :  001845
-
-Frame :  001234
-
-Frame :  002959
-
-Frame :  001886
-
-Frame :  001248
-
-Frame :  002373
-
-Frame :  004455
-
-Frame :  001064
-
-Frame :  001289
-
-Frame :  003186
-
-Frame :  001132
-
-Frame :  002302
-
-Frame :  002599
-
-Frame :  001965
-
-Frame :  003550
-
-Frame :  002419
-
-Frame :  002155
-
-Frame :  000495
-
-Frame :  002669
-
-Frame :  003836
-
-Frame :  003782
-
-Frame :  004416
-
-Frame :  001265
-
-Frame :  002956
-
-Frame :  004227
-
-Frame :  003397
-
-Frame :  000156
-
-Frame :  000996
-
-Frame :  004114
-
-Frame :  005013
-
-Frame :  004738
-
-Frame :  000422
-
-Frame :  001360
-
-Frame :  003242
-
-Frame :  000768
-
-Frame :  004241
-
-Frame :  001341
-
-Frame :  000280
-
-Frame :  004193
-
-Frame :  001684
-
-Frame :  000531
-
-Frame :  002771
-
-Frame :  002282
-
-Frame :  004848
-
-Frame :  001993
-
-Frame :  002486
-
-Frame :  002311
-
-Frame :  004124
-
-Frame :  003377
-
-Frame :  004814
-
-Frame :  002662
-
-Frame :  003967
-
-Frame :  004202
-
-Frame :  004672
-
-Frame :  001181
-
-Frame :  000171
-
-Frame :  005015
-
-Frame :  000498
-
-Frame :  003504
-
-Frame :  002566
-
-Frame :  003021
-
-Frame :  003977
-
-Frame :  001117
-
-Frame :  001178
-
-Frame :  003467
-
-Frame :  002989
-
-Frame :  002946
-
-Frame :  002266
-
-Frame :  001592
-
-Frame :  004973
-
-Frame :  000644
-
-Frame :  004466
-
-Frame :  000841
-
-Frame :  004558
-
-Frame :  000014
-
-Frame :  000738
-
-Frame :  004230
-
-Frame :  001741
-
-Frame :  000612
-
-Frame :  002189
-
-Frame :  004659
-
-Frame :  004618
-
-Frame :  002218
-
-Frame :  001650
-
-Frame :  002050
-
-                                                                       [A

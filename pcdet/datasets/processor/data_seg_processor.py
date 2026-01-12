@@ -81,7 +81,7 @@ class DataSegProcessor(nn.Module):
         # print('\n')
         #############################################
         #2.加载部分预训练数据
-        pretrained_dict = torch.load('CasA_0/output/dual_radar_models/CasA-V_arbe_seg/default-pointnet2_seg_0522/ckpt/checkpoint_epoch_80.pth')
+        pretrained_dict = torch.load('our_ckpt_path')
         pretrained_dict = pretrained_dict['model_state']
 
         # for k,v in pretrained_dict.items():

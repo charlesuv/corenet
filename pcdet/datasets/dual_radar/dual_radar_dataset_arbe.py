@@ -395,11 +395,7 @@ class DualradarDataset_ARBE_seg_detection(DatasetTemplate_seg_detection):
 
         eval_det_annos = copy.deepcopy(det_annos)
         eval_gt_annos = [copy.deepcopy(info['annos']) for info in self.dual_radar_infos]
-        # # 保存字典
-        # with open('/home/liufuyang/workspace/Dual-Radar/output_debug/7_eval_det_annos.pkl', 'wb') as f:
-        #     pickle.dump(eval_det_annos, f)
-        # with open('/home/liufuyang/workspace/Dual-Radar/output_debug/7_eval_gt_annos.pkl', 'wb') as f:
-        #     pickle.dump(eval_gt_annos, f)
+
             
         # range
         range1 = [0,30]
@@ -438,8 +434,6 @@ class DualradarDataset_ARBE_seg_detection(DatasetTemplate_seg_detection):
         valid_gt_names = np.array(valid_gt_names)
         data_dict['gt_boxes'] = valid_gt_box
         data_dict['gt_names'] = valid_gt_names
-        #     np.save('/data/liufuyang/CasA/debug_output/del_empty_box_points.npy', points)
-        #     np.save('/data/liufuyang/CasA/debug_output/del_empty_box_gt_boxes.npy',valid_gt_box)
         return data_dict
 
     def __len__(self):
@@ -514,8 +508,6 @@ class DualradarDataset_ARBE_seg_detection(DatasetTemplate_seg_detection):
         # 删除当前帧无效包围框##########################################################################
         input_dict = self.del_empty_box(input_dict)
         # ###########################################################################
-        # np.save('/home/liufuyang/workspace/CasA_0/output_debug/gt_box.npy',input_dict['gt_boxes'])
-        # np.save('/home/liufuyang/workspace/CasA_0/output_debug/points.npy', points)
         data_dict = self.prepare_data(data_dict=input_dict)
 
         # 转换为numpy数组
@@ -918,12 +910,7 @@ class DualradarDataset_ARBE(DatasetTemplate):
 
         eval_det_annos = copy.deepcopy(det_annos)
         eval_gt_annos = [copy.deepcopy(info['annos']) for info in self.dual_radar_infos]
-        # # 保存字典
-        # with open('/data1/liufuyang/code/Dual-Radar/output_debug/7_eval_det_annos.pkl', 'wb') as f:
-        #     pickle.dump(eval_det_annos, f)
-        # with open('/data1/liufuyang/code/Dual-Radar/output_debug/7_eval_gt_annos.pkl', 'wb') as f:
-        #     pickle.dump(eval_gt_annos, f)
-            
+
         # range
         range1 = [0,30]
         range2 = [20,40]
@@ -961,8 +948,6 @@ class DualradarDataset_ARBE(DatasetTemplate):
         valid_gt_names = np.array(valid_gt_names)
         data_dict['gt_boxes'] = valid_gt_box
         data_dict['gt_names'] = valid_gt_names
-        #     np.save('/data/liufuyang/CasA/debug_output/del_empty_box_points.npy', points)
-        #     np.save('/data/liufuyang/CasA/debug_output/del_empty_box_gt_boxes.npy',valid_gt_box)
         return data_dict
     
     def SOR_filter(self, data_dict, k=5, std_factor=1.0):

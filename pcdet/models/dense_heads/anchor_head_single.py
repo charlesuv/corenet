@@ -87,10 +87,5 @@ class AnchorHeadSingle(AnchorHeadTemplate):
             data_dict['batch_cls_preds'] = batch_cls_preds
             data_dict['batch_box_preds'] = batch_box_preds
             data_dict['cls_preds_normalized'] = False
-            # np.save('/home/liufuyang/workspace/Dual-Radar/output_debug/points_mean_2.npy', data_dict['points'].cpu().numpy())
-            # np.save('/home/liufuyang/workspace/Dual-Radar/output_debug/gt_boxes_2.npy', data_dict['gt_boxes'][0].cpu().numpy())
-            
-            # # 保存data_dict
-            # import torch
-            # torch.save(self.forward_ret_dict, '/home/liufuyang/workspace/Dual-Radar/output_debug/4_anchor_head_single.pt')
+
         return data_dict

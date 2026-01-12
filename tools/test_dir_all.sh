@@ -2,7 +2,7 @@ export CUDA_VISIBLE_DEVICES=2
 Model_name=CasA-V_arbe_seg_detection #CasA-V_arbe_seg_detection #voxel_rcnn_arbe #CasA-V_arbe #
 PYFile=cfgs/tjradar_models/${Model_name}.yaml
 Extra_tag=default_casA_V_arbe_seg_detection
-CKPT_DIR=/data1/liufuyang/code/Dual-Radar/output/tjradar_models/CasA-V_arbe_seg_detection/default_casA_V_arbe_seg_detection/ckpt
+CKPT_DIR= your_ckpt_path
 
 #CKPT_file=../output/dual_radar_models/${Model_name}/${Extra_tag}/ckpt/checkpoint_epoch_80.pth
 
